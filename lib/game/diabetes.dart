@@ -16,6 +16,9 @@ class _DiabetesPageState extends State<DiabetesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -24,9 +27,12 @@ class _DiabetesPageState extends State<DiabetesPage> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "Encuesta",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: isTablet ? 24 : 18,
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -35,86 +41,94 @@ class _DiabetesPageState extends State<DiabetesPage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
+              Center(
                 child: Text(
                   "Datos Básicos Sobre Tu Diabetes",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: isTablet ? 28 : 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal,
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              _buildQuestion(
-                question:
-                    "¿Hace cuánto tiempo fuiste diagnosticado con diabetes?",
-                options: [
-                  "Menos de un año",
-                  "1-5 años",
-                  "Más de 5",
-                  "No estoy seguro",
+              _buildQuestionCard(
+                questions: [
+                  {
+                    "question":
+                        "¿Hace cuánto tiempo fuiste diagnosticado con diabetes?",
+                    "options": [
+                      "Menos de un año",
+                      "1-5 años",
+                      "Más de 5",
+                      "No estoy seguro"
+                    ],
+                  },
+                  {
+                    "question":
+                        "¿Con qué frecuencia monitoreas tus niveles de glucosa?",
+                    "options": [
+                      "Varias veces al día",
+                      "Una vez al día",
+                      "Varias veces a la semana",
+                      "Rara vez o nunca"
+                    ],
+                  },
+                  {
+                    "question":
+                        "¿Cuáles han sido tus niveles promedio de glucosa en las últimas semanas? (en mg/dL)",
+                    "options": [
+                      "Menos de 100",
+                      "Entre 100 y 180",
+                      "Más de 180",
+                      "No estoy seguro"
+                    ],
+                  },
                 ],
-                selectedValue: _selectedOption1,
-                onOptionSelected: (value) {
+                selectedValues: [
+                  _selectedOption1,
+                  _selectedOption2,
+                  _selectedOption3,
+                ],
+                onOptionSelected: (index, value) {
                   setState(() {
-                    _selectedOption1 = value;
+                    if (index == 0) {
+                      _selectedOption1 = value;
+                    } else if (index == 1) {
+                      _selectedOption2 = value;
+                    } else {
+                      _selectedOption3 = value;
+                    }
                   });
                 },
+                isTablet: isTablet,
               ),
-              const SizedBox(height: 20),
-              _buildQuestion(
-                question:
-                    "¿Con qué frecuencia monitoreas tus niveles de glucosa?",
-                options: [
-                  "Varias veces al día",
-                  "Una vez al día",
-                  "Varias veces a la semana",
-                  "Rara vez o nunca",
-                ],
-                selectedValue: _selectedOption2,
-                onOptionSelected: (value) {
-                  setState(() {
-                    _selectedOption2 = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-              _buildQuestion(
-                question:
-                    "¿Cuáles han sido tus niveles promedio de glucosa en las últimas semanas? (en mg/dL)",
-                options: [
-                  "Menos de 100",
-                  "Entre 100 y 180",
-                  "Más de 180",
-                  "No estoy seguro",
-                ],
-                selectedValue: _selectedOption3,
-                onOptionSelected: (value) {
-                  setState(() {
-                    _selectedOption3 = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               // Conejo y mensaje
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(isTablet ? 16.0 : 12.0),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade300,
+                            spreadRadius: 2,
+                            blurRadius: 4,
+                          ),
+                        ],
                       ),
                       child: const Text(
                         "Intenta responder la encuesta de forma precisa",
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -122,15 +136,15 @@ class _DiabetesPageState extends State<DiabetesPage> {
                   const SizedBox(width: 10),
                   Image.asset(
                     'assets/images/conejo.png', // Ruta al conejo
-                    width: 100,
-                    height: 100,
+                    width: isTablet ? 140 : 100,
+                    height: isTablet ? 140 : 100,
                     fit: BoxFit.contain,
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -138,21 +152,30 @@ class _DiabetesPageState extends State<DiabetesPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const ResultadoPage(puntos: 11, estado: 'CONTROL DEFICIENTE', descripcion : 'El usuario presenta síntomas frecuentes, falta de monitoreo y/o poca adherencia al tratamiento. Requiere intervención inmediata', color: Colors.red), // Asegúrate de tener CrearPage implementado
+                          builder: (context) => const ResultadoPage(
+                              puntos: 11,
+                              estado: 'CONTROL DEFICIENTE',
+                              descripcion:
+                                  'El usuario presenta síntomas frecuentes, falta de monitoreo y/o poca adherencia al tratamiento. Requiere intervención inmediata',
+                              color: Colors.red), // Implementado
                         ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF53746E),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(
+                        vertical: isTablet ? 20 : 16,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Enviar",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: isTablet ? 20 : 16,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -164,115 +187,91 @@ class _DiabetesPageState extends State<DiabetesPage> {
     );
   }
 
-  Widget _buildQuestion({
-    required String question,
-    required List<String> options,
-    required String? selectedValue,
-    required ValueChanged<String> onOptionSelected,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.blue[50],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            question,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.teal,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Column(
+Widget _buildQuestionCard({
+  required List<Map<String, dynamic>> questions,
+  required List<String?> selectedValues,
+  required void Function(int index, String value) onOptionSelected, // Cambiar el tipo aquí
+  required bool isTablet,
+}) {
+  return Container(
+    padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
+    decoration: BoxDecoration(
+      color: Colors.blue[50],
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(color: Colors.teal, width: 1),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: questions.asMap().entries.map((entry) {
+        final index = entry.key;
+        final question = entry.value["question"];
+        final options = entry.value["options"] as List<String>;
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: options.sublist(0, 2).map((option) {
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: ElevatedButton(
-                        onPressed: () => onOptionSelected(option),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: selectedValue == option
-                              ? Colors.teal
-                              : Colors.white,
-                          foregroundColor: selectedValue == option
-                              ? Colors.white
-                              : Colors.black87,
-                          side: BorderSide(
-                            color: option.contains("No estoy seguro")
-                                ? Colors.red
-                                : Colors.teal,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 10,
-                          ),
-                        ),
-                        child: Text(
-                          option,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
+              Text(
+                question,
+                style: TextStyle(
+                  fontSize: isTablet ? 18 : 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal,
+                ),
               ),
               const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: options.sublist(2, 4).map((option) {
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: ElevatedButton(
-                        onPressed: () => onOptionSelected(option),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: selectedValue == option
-                              ? Colors.teal
-                              : Colors.white,
-                          foregroundColor: selectedValue == option
-                              ? Colors.white
-                              : Colors.black87,
-                          side: BorderSide(
-                            color: option.contains("No estoy seguro")
-                                ? Colors.red
-                                : Colors.teal,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 10,
-                          ),
-                        ),
-                        child: Text(
-                          option,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 12),
-                        ),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12.0,
+                  crossAxisSpacing: 12.0,
+                  childAspectRatio: isTablet ? 4 : 3.2,
+                ),
+                itemCount: options.length,
+                itemBuilder: (context, optionIndex) {
+                  final option = options[optionIndex];
+                  return ElevatedButton(
+                    onPressed: () => onOptionSelected(index, option), // Uso del callback
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: selectedValues[index] == option
+                          ? Colors.teal
+                          : Colors.white,
+                      foregroundColor: selectedValues[index] == option
+                          ? Colors.white
+                          : Colors.black87,
+                      side: BorderSide(
+                        color: option.contains("No estoy seguro")
+                            ? Colors.red.shade300
+                            : Colors.teal.shade300,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: isTablet ? 16 : 12,
+                      ),
+                    ),
+                    child: Text(
+                      option,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: isTablet ? 16 : 14,
                       ),
                     ),
                   );
-                }).toList(),
+                },
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
+        );
+      }).toList(),
+    ),
+  );
+}
+
 }
 
 void main() {

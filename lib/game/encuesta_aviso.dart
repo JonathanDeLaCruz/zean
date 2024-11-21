@@ -48,7 +48,7 @@ class EncuestaAviso extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Gracias por tomarte el tiempo de contestar la encuesta. En Zenulin nos preocupamos por tu salud y queremos llevar un control adecuado para darte la mejor atención",
+                      "En Zenulin nos preocupamos por tu salud y queremos llevar un control adecuado para darte la mejor atención. Responde a la siguiente encuesta para saber más sorbre tu estado de salud.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: isTablet ? 18 : 14,
@@ -97,8 +97,8 @@ class EncuestaAviso extends StatelessWidget {
                 children: [
                   Image.asset(
                     Assets.conejo, // Ruta a tu imagen del conejo
-                    width: isTablet ? 500 : 300,
-                    height: isTablet ? 500 : 300,
+                    width: isTablet ? 700 : 300,
+                    height: isTablet ? 700 : 300,
                     fit: BoxFit.contain,
                   ),
                   Positioned(
@@ -106,11 +106,11 @@ class EncuestaAviso extends StatelessWidget {
                     right: isTablet ? 60 : 40,
                     child: Column(
                       children: [
-                        _buildBubble(isTablet ? 20 : 12),
+                        _buildBubble(isTablet ? 36 : 12),
                         const SizedBox(height: 8),
                         _buildBubble(isTablet ? 28 : 20),
                         const SizedBox(height: 8),
-                        _buildBubble(isTablet ? 36 : 28),
+                        _buildBubble(isTablet ? 20 : 28),
                       ],
                     ),
                   ),

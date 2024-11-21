@@ -66,7 +66,7 @@ if (showMessage) // Mostrar globo solo si la condición es true
                 "Responde la encuesta sobre diabetes que aparece a continuación. Si decides no hacerlo, el anuncio permanecerá visible, pero podrás seguir usando la app normalmente.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16, // Letra más grande
+                  fontSize: 18, // Letra más grande
                   color: Colors.white, // Texto blanco
                 ),
               ),
@@ -104,8 +104,8 @@ if (showMessage) // Mostrar globo solo si la condición es true
         ),
         // Círculos decorativos para simular el globo
         Positioned(
-          bottom: -25,
-          left: MediaQuery.of(context).size.width * 0.4, // Centra el triángulo
+          bottom: -60,
+          left: MediaQuery.of(context).size.width * 0.70, // Centra el triángulo
           child: Container(
             width: 50,
             height: 50,
@@ -115,9 +115,21 @@ if (showMessage) // Mostrar globo solo si la condición es true
             ),
           ),
         ),
+          Positioned(
+          bottom: -85,
+          left: MediaQuery.of(context).size.width * 0.65, // Centra el triángulo
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.8),
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
         Positioned(
-          bottom: -50,
-          left: MediaQuery.of(context).size.width * 0.45, // Centra el círculo
+          bottom: -105,
+          left: MediaQuery.of(context).size.width * 0.60, // Centra el círculo
           child: Container(
             width: 30,
             height: 30,
