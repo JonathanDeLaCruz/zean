@@ -4,6 +4,7 @@ import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
 import 'package:zean/game/misiones.dart';
+import 'package:zean/game/perfil.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -115,12 +116,23 @@ class LevelIndicator extends StatelessWidget {
         width: MediaQuery.of(context).size.width - 30,
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.grey[300],
-              child: const Icon(
-                Icons.person,
-                color: Colors.brown,
+            GestureDetector(
+              onTap: () {
+                // Navegar a la vista de UserProfilePage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PerfilPage(),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.grey[300],
+                child: const Icon(
+                  Icons.person,
+                  color: Colors.brown,
+                ),
               ),
             ),
             const SizedBox(width: 10),

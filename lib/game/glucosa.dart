@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:zean/game/modal_no_datos.dart';
 
 class GlucosaPage extends StatelessWidget {
   const GlucosaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    if (true) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ModalNoDatos.show(context); // Invoca el método estático de tu modal
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
