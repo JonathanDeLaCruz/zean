@@ -18,8 +18,9 @@ class GlucosaPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Encabezado
               CustomHeader(
@@ -44,34 +45,56 @@ class GlucosaPage extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
-              // Indicador principal
-              Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.yellow,
-                    width: 4,
-                  ),
-                ),
-                alignment: Alignment.center,
-                child: const Text(
-                  "100\nmg/dL",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+              // Indicador decorativo del nivel de glucosa
+              SizedBox(
+                width: isTablet ? 300 : 250,
+                height: isTablet ? 300 : 250,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Círculo decorativo
+                    CustomPaint(
+                      size: Size(isTablet ? 300 : 250, isTablet ? 300 : 250),
+                      painter: GlucoseCirclePainter(),
+                    ),
+                    // Texto en el centro
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "100",
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "mg/dL",
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
-              // Fila de indicadores secundarios
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // Cuadrícula de indicadores secundarios
+              GridView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  childAspectRatio: 2.5,
+                ),
                 children: [
                   _buildIndicatorCard(
                     title: "Oxigenación",
@@ -82,18 +105,11 @@ class GlucosaPage extends StatelessWidget {
                   ),
                   _buildIndicatorCard(
                     title: "Presión",
-                    value: "95%",
+                    value: "120/80",
                     description: "Tus niveles de presión",
-                    progressValue: 0.95,
+                    progressValue: 0.75,
                     progressColor: Colors.red,
                   ),
-                ],
-              ),
-              const SizedBox(height: 10),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
                   _buildIndicatorCard(
                     title: "Horas de sueño",
                     value: "2 horas",
@@ -110,20 +126,20 @@ class GlucosaPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
               // Gráfico de glucosa
-              const Text(
+              Text(
                 "Registro de Glucosa",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: isTablet ? 24 : 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal,
                 ),
               ),
               const SizedBox(height: 20),
               Container(
-                height: 200,
+                height: isTablet ? 300 : 200,
                 width: double.infinity,
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
@@ -152,13 +168,13 @@ class GlucosaPage extends StatelessWidget {
     required Color progressColor,
   }) {
     return Container(
-      width: 180,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -174,7 +190,7 @@ class GlucosaPage extends StatelessWidget {
             backgroundColor: Colors.grey[300],
             color: progressColor,
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Text(
             value,
             style: const TextStyle(
@@ -192,6 +208,42 @@ class GlucosaPage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class GlucoseCirclePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paintOuterCircle = Paint()
+      ..color = Colors.yellow
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6;
+
+    final paintInnerCircle = Paint()
+      ..color = Colors.teal
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2.5;
+
+    // Dibuja el círculo exterior
+    canvas.drawCircle(center, radius, paintOuterCircle);
+
+    // Dibuja el círculo interior
+    canvas.drawCircle(center, radius - 10, paintInnerCircle);
+
+    // Dibuja puntos decorativos
+    final pointPaint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(Offset(center.dx + radius, center.dy), 5, pointPaint);
+    canvas.drawCircle(Offset(center.dx - radius, center.dy), 5, pointPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
 

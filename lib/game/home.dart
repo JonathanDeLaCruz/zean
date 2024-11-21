@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
         .entries
         .map(
           (entry) => Positioned(
-            top: 230, // Incremento para separación opcional
+            top: 500, // Incremento para separación opcional
             right: 0,
             child: Container(
               width: screenWidth,
@@ -114,7 +114,7 @@ class LevelIndicator extends StatelessWidget {
           color: const Color(0xFF53746E),
           borderRadius: BorderRadius.circular(12),
         ),
-        height: MediaQuery.of(context).size.width * .2,
+        height: 60,
         width: MediaQuery.of(context).size.width - 30,
         child: Row(
           children: [
