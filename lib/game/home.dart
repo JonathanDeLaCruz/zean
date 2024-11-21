@@ -4,6 +4,7 @@ import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
 import 'package:zean/game/misiones.dart';
+import 'package:zean/game/notificaciones.dart';
 import 'package:zean/game/perfil.dart';
 
 class HomePage extends StatelessWidget {
@@ -56,8 +57,9 @@ class HomePage extends StatelessWidget {
       Assets.bufanda,
       Assets.zanahoria,
     ];
-    final double screenWidth = WidgetsBinding.instance.window.physicalSize.width /
-    WidgetsBinding.instance.window.devicePixelRatio;
+    final double screenWidth =
+        WidgetsBinding.instance.window.physicalSize.width /
+            WidgetsBinding.instance.window.devicePixelRatio;
 
     return images
         .asMap()
@@ -176,9 +178,20 @@ class LevelIndicator extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            const Icon(
-              Icons.notifications,
-              color: Colors.white,
+            IconButton(
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const NotificacionesPage(), // Asegúrate de tener implementado NotificacionesPage
+                  ),
+                );
+              },
             ),
           ],
         ),

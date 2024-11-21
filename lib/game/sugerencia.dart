@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
 import 'package:zean/game/encuesta.dart';
+import 'package:zean/game/notificaciones.dart';
+import 'package:zean/game/perfil.dart';
 import 'package:zean/game/recomendacion.dart';
 
 class SugerenciaPage extends StatelessWidget {
@@ -17,32 +19,27 @@ class SugerenciaPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Encabezado
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.grey[300],
-                    child: const Icon(
-                      Icons.person,
-                      color: Colors.brown,
-                      size: 32,
+              CustomHeader(
+                title: "SUGERENCIAS",
+                onAvatarTap: () {
+                  // Navegar a la página de perfil
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const PerfilPage(), // Implementa PerfilPage
                     ),
-                  ),
-                  const Text(
-                    "SUGERENCIAS",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal,
+                  );
+                },
+                onNotificationTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const NotificacionesPage(), // Implementa PerfilPage
                     ),
-                  ),
-                  const Icon(
-                    Icons.notifications,
-                    color: Colors.orange,
-                    size: 32,
-                  ),
-                ],
+                  );
+                },
               ),
               const SizedBox(height: 20),
 

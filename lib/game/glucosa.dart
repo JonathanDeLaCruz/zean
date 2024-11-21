@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zean/game/modal_no_datos.dart';
+import 'package:zean/game/notificaciones.dart';
+import 'package:zean/game/perfil.dart';
 
 class GlucosaPage extends StatelessWidget {
   const GlucosaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     if (true) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ModalNoDatos.show(context); // Invoca el método estático de tu modal
@@ -21,32 +22,27 @@ class GlucosaPage extends StatelessWidget {
           child: Column(
             children: [
               // Encabezado
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.grey[300],
-                    child: const Icon(
-                      Icons.person,
-                      color: Colors.brown,
-                      size: 32,
+              CustomHeader(
+                title: "NIVEL DE GLUCOSA",
+                onAvatarTap: () {
+                  // Navegar a la página de perfil
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const PerfilPage(), // Implementa PerfilPage
                     ),
-                  ),
-                  const Text(
-                    "NIVEL DE GLUCOSA",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal,
+                  );
+                },
+                onNotificationTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const NotificacionesPage(), // Implementa PerfilPage
                     ),
-                  ),
-                  const Icon(
-                    Icons.notifications,
-                    color: Colors.orange,
-                    size: 32,
-                  ),
-                ],
+                  );
+                },
               ),
               const SizedBox(height: 20),
 

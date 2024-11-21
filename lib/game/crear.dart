@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:zean/game/crear.dart';
+import 'package:zean/game/informacion.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class CrearPage extends StatelessWidget {
+  const CrearPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 alignment: Alignment.center,
                 child: const Text(
-                  "LOGO ZENULIN",
+                  "LOGIN",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget {
 
               // Título
               const Text(
-                "INICIAR SESIÓN",
+                "CREAR CUENTA",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -47,19 +47,28 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 20),
 
               // Campos de entrada
-              _buildInputField(label: "Usuario"),
+              _buildInputField(label: "Nombre de usuario"),
+              const SizedBox(height: 10),
+              _buildInputField(label: "Correo electrónico"),
+              const SizedBox(height: 10),
+              _buildInputField(label: "Confirmar correo electrónico"),
               const SizedBox(height: 10),
               _buildInputField(label: "Contraseña", obscureText: true),
+              const SizedBox(height: 10),
+              _buildInputField(label: "Confirmar contraseña", obscureText: true),
               const SizedBox(height: 20),
 
-              // Botón Iniciar
+              // Botón Crear
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Lógica para iniciar sesión
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Iniciando sesión...")),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const InformacionPage(), // Asegúrate de tener CrearPage implementado
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -69,53 +78,21 @@ class LoginPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Iniciar",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ],
+                  child: const Text(
+                    "Crear",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),
               const SizedBox(height: 10),
 
-              // Texto para registro
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // Lógica para "No tengo cuenta"
-                    },
-                    child: const Text(
-                      "No tengo cuenta",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.teal,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-
-              // Botón Crear cuenta
+              // Botón Cancelar
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navegar a CrearPage
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const CrearPage(), // Asegúrate de tener CrearPage implementado
-                      ),
-                    );
+                    // Lógica para cancelar
+                    Navigator.pop(context); // Regresa a la pantalla anterior
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
@@ -125,39 +102,10 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    "Crear cuenta",
+                    "Cancelar",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-
-              // Conejo y mensaje
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Text(
-                        "BIENVENIDO A NUESTRA APP",
-                        style: TextStyle(fontSize: 12),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Image.asset(
-                    'assets/images/conejo.png', // Ruta a la imagen del conejo
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.contain,
-                  ),
-                ],
               ),
             ],
           ),
@@ -188,6 +136,6 @@ class LoginPage extends StatelessWidget {
 
 void main() {
   runApp(const MaterialApp(
-    home: LoginPage(),
+    home: CrearPage(),
   ));
 }
