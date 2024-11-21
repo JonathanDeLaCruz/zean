@@ -33,8 +33,7 @@ class GlucosaPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          const PerfilPage(), // Implementa PerfilPage
+                      builder: (context) => const PerfilPage(),
                     ),
                   );
                 },
@@ -42,8 +41,7 @@ class GlucosaPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          const NotificacionesPage(), // Implementa PerfilPage
+                      builder: (context) => const NotificacionesPage(),
                     ),
                   );
                 },
@@ -52,14 +50,14 @@ class GlucosaPage extends StatelessWidget {
 
               // Indicador decorativo del nivel de glucosa
               SizedBox(
-                width: isTablet ? 300 : 250,
-                height: isTablet ? 300 : 250,
+                width: isTablet ? 400 : 330,
+                height: isTablet ? 400 : 330,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     // Círculo decorativo
                     CustomPaint(
-                      size: Size(isTablet ? 300 : 250, isTablet ? 300 : 250),
+                      size: Size(isTablet ? 400 : 330, isTablet ? 400 : 330),
                       painter: GlucoseCirclePainter(),
                     ),
                     // Texto en el centro
@@ -69,7 +67,7 @@ class GlucosaPage extends StatelessWidget {
                         Text(
                           "100",
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: 60,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -77,7 +75,7 @@ class GlucosaPage extends StatelessWidget {
                         Text(
                           "mg/dL",
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 40,
                             color: Colors.grey,
                           ),
                         ),
@@ -171,7 +169,7 @@ class GlucosaPage extends StatelessWidget {
     required Color progressColor,
   }) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
@@ -180,31 +178,41 @@ class GlucosaPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Título del indicador
           Text(
             title,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 18, // Tamaño aumentado
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
+
+          // Línea de progreso
           LinearProgressIndicator(
             value: progressValue,
             backgroundColor: Colors.grey[300],
             color: progressColor,
+            minHeight: 8, // Grosor aumentado
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
+
+          // Valor del indicador
           Text(
             value,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 20, // Tamaño aumentado
               fontWeight: FontWeight.bold,
+              color: Colors.black87,
             ),
           ),
+          const SizedBox(height: 6),
+
+          // Descripción del indicador
           Text(
             description,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 16, // Tamaño aumentado
               color: Colors.grey,
             ),
           ),

@@ -18,7 +18,6 @@ class NotificacionesPage extends StatelessWidget {
             title: "NOTIFICACIONES",
             isTablet: isTablet,
             onAvatarTap: () {
-              // Navegar a la página de perfil
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -26,14 +25,7 @@ class NotificacionesPage extends StatelessWidget {
                 ),
               );
             },
-            onNotificationTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NotificacionesPage(),
-                ),
-              );
-            },
+            onNotificationTap: () {},
           ),
           SizedBox(height: isTablet ? 24.0 : 16.0),
 
@@ -43,39 +35,66 @@ class NotificacionesPage extends StatelessWidget {
               padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
               children: [
                 _buildNotificationCard(
-                  context,
                   title: "Alerta presión arterial",
                   description:
                       "¡¡Tu presión arterial rebasa lo habitual, se recomienda aplicar medicamentos o ir a tu centro de salud más cercano!!",
-                  backgroundColor: Colors.red[100]!,
+                  backgroundColor: const Color(0xFFFFE6E6), // Suave rojo
                   iconColor: Colors.red,
+                  icon: Icons.warning,
                   isTablet: isTablet,
                 ),
                 _buildNotificationCard(
-                  context,
                   title: "¡Un Paseo Saludable!",
                   description:
                       "Haz completado la misión del día, aprovecha a canjear tus recompensas.",
-                  backgroundColor: Colors.green[100]!,
+                  backgroundColor: const Color(0xFFF6FFF6), // Suave verde
                   iconColor: Colors.green,
+                  icon: Icons.directions_walk,
                   isTablet: isTablet,
                 ),
                 _buildNotificationCard(
-                  context,
                   title: "¡Toma tu Medicamento!",
                   description:
                       "Haz completado la misión del día, aprovecha a canjear tus recompensas.",
-                  backgroundColor: Colors.green[100]!,
+                  backgroundColor: const Color(0xFFF6FFF6), // Suave verde
                   iconColor: Colors.green,
+                  icon: Icons.medication,
                   isTablet: isTablet,
                 ),
                 _buildNotificationCard(
-                  context,
                   title: "Hidrátate Bien",
                   description:
-                      "Recordatorio de misión diaria, \"Registra al menos 1.5 litros de agua consumidos al día durante 5 días.\"",
-                  backgroundColor: Colors.blue[100]!,
+                      "Recordatorio de misión diaria: \"Registra al menos 1.5 litros de agua consumidos al día durante 5 días.\"",
+                  backgroundColor: const Color(0xFFE6F7FF), // Suave azul
                   iconColor: Colors.blue,
+                  icon: Icons.water_drop,
+                  isTablet: isTablet,
+                ),
+                _buildNotificationCard(
+                  title: "Sueño no reparador",
+                  description:
+                      "¡Parece que no has dormido las horas suficientes para mejorar tu salud! Se recomienda descansar y evitar trasnochar.",
+                  backgroundColor: const Color(0xFFFFE6E6), // Suave rojo
+                  iconColor: Colors.red,
+                  icon: Icons.bedtime,
+                  isTablet: isTablet,
+                ),
+                _buildNotificationCard(
+                  title: "Reto Activo",
+                  description:
+                      "Recordatorio de misión semanal: \"Realiza actividad física durante al menos 30 minutos en 3 días de la semana.\"",
+                  backgroundColor: const Color(0xFFE6F7FF), // Suave azul
+                  iconColor: Colors.blue,
+                  icon: Icons.fitness_center,
+                  isTablet: isTablet,
+                ),
+                _buildNotificationCard(
+                  title: "¡Control matutino!",
+                  description:
+                      "Haz completado la misión del día, aprovecha a canjear tus recompensas.",
+                  backgroundColor: const Color(0xFFF6FFF6), // Suave verde
+                  iconColor: Colors.green,
+                  icon: Icons.check_circle,
                   isTablet: isTablet,
                 ),
               ],
@@ -86,12 +105,12 @@ class NotificacionesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildNotificationCard(
-    BuildContext context, {
+  Widget _buildNotificationCard({
     required String title,
     required String description,
     required Color backgroundColor,
     required Color iconColor,
+    required IconData icon,
     required bool isTablet,
   }) {
     return Container(
@@ -105,35 +124,22 @@ class NotificacionesPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Icon(
+                icon,
+                size: isTablet ? 36 : 28,
+                color: iconColor,
+              ),
+              SizedBox(width: isTablet ? 16.0 : 12.0),
               Expanded(
                 child: Text(
                   title,
                   style: TextStyle(
                     fontSize: isTablet ? 20 : 16,
                     fontWeight: FontWeight.bold,
-                    color: iconColor,
+                    color: Colors.black87,
                   ),
                 ),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.delete, size: 20),
-                    color: Colors.black,
-                    onPressed: () {
-                      // Acción para eliminar notificación
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.check, size: 20),
-                    color: Colors.black,
-                    onPressed: () {
-                      // Acción para marcar como leída o completada
-                    },
-                  ),
-                ],
               ),
             ],
           ),
@@ -142,8 +148,28 @@ class NotificacionesPage extends StatelessWidget {
             description,
             style: TextStyle(
               fontSize: isTablet ? 16 : 14,
-              color: Colors.black,
+              color: Colors.black87,
             ),
+          ),
+          SizedBox(height: isTablet ? 16 : 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.delete, size: 20),
+                color: Colors.black54,
+                onPressed: () {
+                  // Acción para eliminar notificación
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.check, size: 20),
+                color: Colors.black54,
+                onPressed: () {
+                  // Acción para marcar como leída o completada
+                },
+              ),
+            ],
           ),
         ],
       ),
