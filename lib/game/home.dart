@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/flame.dart';
@@ -9,12 +11,80 @@ import 'package:zean/game/misiones.dart';
 import 'package:zean/game/notificaciones.dart';
 import 'package:zean/game/perfil.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late List<String> _currentImages;
+  late Timer _timer;
+  bool showMessage = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateImages(); // Inicializar las imágenes de forma aleatoria
+    _startImageUpdateTimer(); // Iniciar el temporizador
+    _startImageUpdateMensaje(); // Iniciar el temporizador
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancelar el temporizador al salir del widget
+    super.dispose();
+  }
+
+  void _startImageUpdateTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      setState(() {
+        _updateImages(); // Actualizar las imágenes de forma aleatoria
+      });
+    });
+  }
+
+  void _startImageUpdateMensaje() {
+    _timer = Timer.periodic(const Duration(minutes: 2), (timer) {
+      setState(() {
+        showMessage = !showMessage; // Actualizar las imágenes de forma aleatoria
+      });
+    });
+  }
+
+  void _updateImages() {
+    final random = Random();
+    final conejoList = [
+      Assets.conejo1,
+      Assets.conejo2,
+      Assets.conejo3,
+      Assets.conejo4,
+      Assets.conejo5,
+    ];
+
+    final otherAssets = [
+      Assets.lente,
+      Assets.bigote,
+      Assets.sombrero,
+      Assets.bufanda,
+      Assets.peluche,
+    ];
+
+    // Selecciona un conejo aleatorio
+    final selectedConejo = conejoList[random.nextInt(conejoList.length)];
+
+    // Mezcla los otros elementos
+    final shuffledOthers = otherAssets..shuffle(random);
+    final selectedOthers = shuffledOthers.take(2).toList();
+
+    // Combina el conejo seleccionado con los elementos mezclados
+    _currentImages = [selectedConejo, ...selectedOthers];
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool showMessage = true; // Cambia a false para ocultar el mensaje
+     // Cambia a false para ocultar el mensaje
 
     return FutureBuilder(
       future: _loadBackgroundImage(),
@@ -44,104 +114,110 @@ class HomePage extends StatelessWidget {
                 ),
                 // Imágenes adicionales
                 ..._buildImages(context),
-if (showMessage) // Mostrar globo solo si la condición es true
-  Positioned(
-    top: MediaQuery.of(context).size.height * 0.2,
-    left: MediaQuery.of(context).size.width * 0.1,
-    right: MediaQuery.of(context).size.width * 0.1,
-    child: Stack(
-      clipBehavior: Clip.none,
-      children: [
-        // Globo de diálogo
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.8), // Fondo negro translúcido
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                "Responde la encuesta sobre diabetes que aparece a continuación. Si decides no hacerlo, el anuncio permanecerá visible, pero podrás seguir usando la app normalmente.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18, // Letra más grande
-                  color: Colors.white, // Texto blanco
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EncuestaAviso(),
+                if (showMessage) // Mostrar globo solo si la condición es true
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.2,
+                    left: MediaQuery.of(context).size.width * 0.1,
+                    right: MediaQuery.of(context).size.width * 0.1,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        // Globo de diálogo
+                        Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.black
+                                .withOpacity(0.8), // Fondo negro translúcido
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text(
+                                "Responde la encuesta sobre diabetes que aparece a continuación. Si decides no hacerlo, el anuncio permanecerá visible, pero podrás seguir usando la app normalmente.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18, // Letra más grande
+                                  color: Colors.white, // Texto blanco
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EncuestaAviso(),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(
+                                      0xFF53746E), // Color del botón
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 12,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "RESPONDER",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Círculos decorativos para simular el globo
+                        Positioned(
+                          bottom: -60,
+                          left: MediaQuery.of(context).size.width *
+                              0.70, // Centra el triángulo
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: -85,
+                          left: MediaQuery.of(context).size.width *
+                              0.65, // Centra el triángulo
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: -105,
+                          left: MediaQuery.of(context).size.width *
+                              0.60, // Centra el círculo
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF53746E), // Color del botón
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: const Text(
-                  "RESPONDER",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        // Círculos decorativos para simular el globo
-        Positioned(
-          bottom: -60,
-          left: MediaQuery.of(context).size.width * 0.70, // Centra el triángulo
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.8),
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-          Positioned(
-          bottom: -85,
-          left: MediaQuery.of(context).size.width * 0.65, // Centra el triángulo
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.8),
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: -105,
-          left: MediaQuery.of(context).size.width * 0.60, // Centra el círculo
-          child: Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.8),
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-      ],
-    ),
-  ),
 
                 Positioned(
                   bottom: 20,
@@ -244,24 +320,16 @@ if (showMessage) // Mostrar globo solo si la condición es true
   List<Widget> _buildImages(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isTablet = size.width > 600;
-    final images = [
-      Assets.conejo,
-      Assets.lente,
-      Assets.bigote,
-      Assets.sombrero,
-      Assets.bufanda,
-      Assets.zanahoria,
-    ];
     final double screenWidth =
         WidgetsBinding.instance.window.physicalSize.width /
             WidgetsBinding.instance.window.devicePixelRatio;
 
-    return images
+    return _currentImages
         .asMap()
         .entries
         .map(
           (entry) => Positioned(
-            top: isTablet ? 500 : 230, // Ajusta según diseño
+            top: isTablet ? 500 : 230,
             right: 0,
             child: Container(
               width: screenWidth,
