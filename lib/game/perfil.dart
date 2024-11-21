@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zean/game/health_connect_example.dart';
 import 'package:zean/game/login.dart';
 import 'package:zean/game/vida.dart';
 import 'package:zean/game/privacidad.dart';
@@ -92,7 +93,8 @@ class PerfilPage extends StatelessWidget {
                     value: "KRYSTELL GUADALUPE GARCIA PERALTA",
                   ),
                   ProfileInfo(label: "SEXO", value: "MUJER"),
-                  ProfileInfo(label: "FECHA DE NACIMIENTO", value: "08/04/2002"),
+                  ProfileInfo(
+                      label: "FECHA DE NACIMIENTO", value: "08/04/2002"),
                   ProfileInfo(label: "LUGAR DE NACIMIENTO", value: "TABASCO"),
                   ProfileInfo(label: "TIPO DE SANGRE", value: "O POSITIVO"),
                 ],
@@ -118,8 +120,8 @@ class PerfilPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const VidaPage(),
-          ),
-        );
+                        ),
+                      );
                     },
                     isTablet: isTablet,
                   ),
@@ -128,12 +130,12 @@ class PerfilPage extends StatelessWidget {
                     title: "Ajustes de privacidad",
                     icon: Icons.arrow_forward_ios,
                     onTap: () {
-                                            Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const PrivacidadPage(),
-          ),
-        );
+                        ),
+                      );
                     },
                     isTablet: isTablet,
                   ),
@@ -142,12 +144,26 @@ class PerfilPage extends StatelessWidget {
                     title: "Añadir contacto",
                     icon: Icons.arrow_forward_ios,
                     onTap: () {
-                                            Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ContactosPage(),
-          ),
-        );
+                        ),
+                      );
+                    },
+                    isTablet: isTablet,
+                  ),
+                  const Divider(),
+                  SettingsOption(
+                    title: "Datos de salud",
+                    icon: Icons.arrow_forward_ios,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HealthApp(),
+                        ),
+                      );
                     },
                     isTablet: isTablet,
                   ),
@@ -156,12 +172,12 @@ class PerfilPage extends StatelessWidget {
                     title: "Cerrar sesión",
                     icon: Icons.arrow_forward_ios,
                     onTap: () {
-                                            Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const LoginPage(),
-          ),
-        );
+                        ),
+                      );
                     },
                     isTablet: isTablet,
                   ),
