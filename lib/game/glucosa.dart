@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zean/game/comidas.dart';
 import 'package:zean/game/modal_no_datos.dart';
 import 'package:zean/game/notificaciones.dart';
 import 'package:zean/game/perfil.dart';
@@ -152,6 +153,31 @@ class GlucosaPage extends StatelessWidget {
                   child: Text(
                     "Gráfico de Glucosa (Simulado)",
                     style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const ComidasPage(), // Asegúrate de tener CrearPage implementado
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF53746E),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    "Control de comidas",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),

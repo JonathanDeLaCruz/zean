@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zean/game/menu.dart';
 
 class ComidasPage extends StatelessWidget {
   const ComidasPage({Key? key}) : super(key: key);
@@ -41,13 +42,13 @@ class ComidasPage extends StatelessWidget {
               const SizedBox(height: 20),
 
               // Botones de categorías
-              _buildCategoryButton("DESAYUNOS", Icons.free_breakfast),
+              _buildCategoryButton("DESAYUNOS", Icons.free_breakfast, 1, context),
               const SizedBox(height: 10),
-              _buildCategoryButton("COMIDAS", Icons.lunch_dining),
+              _buildCategoryButton("COMIDAS", Icons.lunch_dining, 2, context),
               const SizedBox(height: 10),
-              _buildCategoryButton("CENAS", Icons.dinner_dining),
+              _buildCategoryButton("CENAS", Icons.dinner_dining, 3, context),
               const SizedBox(height: 10),
-              _buildCategoryButton("SNACKS", Icons.fastfood),
+              _buildCategoryButton("SNACKS", Icons.fastfood, 4, context),
               const SizedBox(height: 30),
 
               // Lista de comidas del día
@@ -73,6 +74,7 @@ class ComidasPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Container(
+                width: double.infinity, // Ocupa el 100% del ancho disponible
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   color: Colors.blue[50],
@@ -88,6 +90,7 @@ class ComidasPage extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 20),
 
               // Botón de añadir
@@ -116,10 +119,15 @@ class ComidasPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryButton(String title, IconData icon) {
+  Widget _buildCategoryButton(String title, IconData icon, int categoryId, context) {
     return ElevatedButton(
       onPressed: () {
-        // Acción para cada categoría
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Menu(),
+          ),
+        );
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.grey[200],
