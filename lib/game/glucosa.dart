@@ -148,11 +148,15 @@ class GlucosaPage extends StatelessWidget {
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Center(
-                  child: Text(
-                    "Gráfico de Glucosa (Simulado)",
-                    style: TextStyle(color: Colors.grey),
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/grafica.png',
+                    fit: BoxFit.cover,
                   ),
+/*                 child: Image.asset(
+                  'assets/images/glucose_chart.png', // Ruta de la imagen en tu proyecto
+                  fit: BoxFit.cover,
+                ), */
                 ),
               ),
               SizedBox(

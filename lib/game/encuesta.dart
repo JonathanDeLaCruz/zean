@@ -8,9 +8,8 @@ class EncuestaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isTablet = size.width > 600; // Determina si es tablet o no.
+    final isTablet = size.width > 600;
 
-    // Datos estáticos para pruebas
     final String titulo = "Seguimiento semanal";
     final List<Map<String, dynamic>> preguntas = [
       {
@@ -19,25 +18,14 @@ class EncuestaPage extends StatelessWidget {
       },
       {
         "pregunta": "¿Con qué frecuencia registraste tus niveles de glucosa?",
-        "opciones": [
-          "Frecuentemente",
-          "Poca frecuencia",
-          "Muy rara vez",
-          "Nunca"
-        ]
+        "opciones": ["Frecuentemente", "Poca frecuencia", "Muy rara vez", "Nunca"]
       },
       {
         "pregunta": "¿Te sentiste motivado a seguir tu plan de alimentación?",
-        "opciones": [
-          "Muy motivado",
-          "Motivado",
-          "Poco motivado",
-          "Nada motivado"
-        ]
+        "opciones": ["Muy motivado", "Motivado", "Poco motivado", "Nada motivado"]
       },
       {
-        "pregunta":
-            "¿Tuviste alguna dificultad para tomar tus medicamentos según lo indicado?",
+        "pregunta": "¿Tuviste alguna dificultad para tomar tus medicamentos según lo indicado?",
         "opciones": ["Ninguna", "Algunas pocas", "Algunas", "Muchas"]
       },
     ];
@@ -50,12 +38,9 @@ class EncuestaPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           "Encuesta",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: isTablet ? 24 : 18,
-          ),
+          style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -74,7 +59,7 @@ class EncuestaPage extends StatelessWidget {
                     child: Text(
                       titulo,
                       style: TextStyle(
-                        fontSize: isTablet ? 28 : 18,
+                        fontSize: isTablet ? 28 : 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal,
                       ),
@@ -105,7 +90,6 @@ class EncuestaPage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Lógica para enviar respuestas
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Respuestas enviadas")),
                   );
@@ -140,6 +124,7 @@ class EncuestaPage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.blue[50],
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.teal, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,20 +132,20 @@ class EncuestaPage extends StatelessWidget {
           Text(
             question,
             style: TextStyle(
-              fontSize: isTablet ? 18 : 14,
+              fontSize: isTablet ? 18 : 16,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isTablet ? 3 : 2, // Tres opciones por fila en tablets
+              crossAxisCount: 2, // 2 columnas para la cuadrícula
               mainAxisSpacing: 12.0,
               crossAxisSpacing: 12.0,
-              childAspectRatio: isTablet ? 4 : 3, // Proporción ajustada para tablets
+              childAspectRatio: isTablet ? 3.5 : 3.0, // Ajuste de proporciones
             ),
             itemCount: options.length,
             itemBuilder: (context, index) {
@@ -170,20 +155,20 @@ class EncuestaPage extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: Colors.black87,
+                  foregroundColor: Colors.teal,
                   side: const BorderSide(color: Colors.teal),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                   padding: EdgeInsets.symmetric(
-                    horizontal: isTablet ? 24 : 16,
-                    vertical: isTablet ? 14 : 10,
+                    vertical: isTablet ? 16 : 12,
                   ),
                 ),
                 child: Text(
                   options[index],
                   style: TextStyle(
-                    fontSize: isTablet ? 16 : 12,
+                    fontSize: isTablet ? 16 : 14,
+                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -198,6 +183,6 @@ class EncuestaPage extends StatelessWidget {
 
 void main() {
   runApp(const MaterialApp(
-    home: EncuestaPage(id: 1), // ID estático para pruebas
+    home: EncuestaPage(id: 1),
   ));
 }
