@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
-import 'package:zean/game/dashboard.dart';
+import 'package:zean/game/glucosa.dart';
 import 'package:zean/game/home.dart';
-import 'package:zean/game/profile.dart';
+import 'package:zean/game/sugerencia.dart';
 
 void main() => runApp(const MyApp());
 
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         controller: _motionTabBarController,
         initialSelectedTab: "Home",
         useSafeArea: true,
-        labels: const ["Dashboard", "Home", "Profile"],
+        labels: const ["Glucosa", "Home", "Sugerencias"],
         icons: const [Icons.house, Icons.pets, Icons.layers],
         tabSize: 50,
         tabBarHeight: 55,
@@ -81,9 +81,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         physics: const NeverScrollableScrollPhysics(),
         controller: _motionTabBarController,
         children: const <Widget>[
-          DashboardPage(), // Carga desde dashboard.dart
+          GlucosaPage(), // Carga desde glucosa.dart
           HomePage(),      // Carga desde home.dart
-          ProfilePage(),   // Carga desde profile.dart
+          SugerenciaPage(),   // Carga desde profile.dart
         ],
       ),
     );

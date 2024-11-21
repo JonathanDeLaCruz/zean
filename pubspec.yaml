@@ -92,11 +92,4 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
   assets:
-    - assets/images/icon_conejo.png
-    - assets/images/fondo.png
-    - assets/images/conejo.png
-    - assets/images/bigote.png
-    - assets/images/sombrero.png
-    - assets/images/lente.png
-    - assets/images/bufanda.png
-    - assets/images/zanahoria.png
+    - assets/

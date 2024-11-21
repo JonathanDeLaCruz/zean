@@ -7,4 +7,9 @@ class Assets {
   static const lente = 'images/lente.png';
   static const bufanda = 'images/bufanda.png';
   static const zanahoria = 'images/zanahoria.png';
+  static const uno = 'images/1.png';
+  static const dos = 'images/2.png';
+  static const tres = 'images/3.png';
+  static const cuatro = 'images/4.png';
+  static const dieta = 'images/dieta.jpeg';
 }
