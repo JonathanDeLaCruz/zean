@@ -61,8 +61,8 @@ class HomePage extends StatelessWidget {
         .entries
         .map(
           (entry) => Positioned(
-            top: 250 + (entry.key * 10), // Incremento para separación opcional
-            right: -25,
+            top: 230, // Incremento para separación opcional
+            right: -5,
             child: Container(
               width: 450,
               height: 450,
