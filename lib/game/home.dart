@@ -111,7 +111,7 @@ class LevelIndicator extends StatelessWidget {
           color: const Color(0xFF53746E),
           borderRadius: BorderRadius.circular(12),
         ),
-        height: 60,
+        height: MediaQuery.of(context).size.width * .2,
         width: MediaQuery.of(context).size.width - 30,
         child: Row(
           children: [
