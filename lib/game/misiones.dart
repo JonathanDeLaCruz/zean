@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zean/game/home.dart'; // Asegúrate de importar la clase LevelIndicator
+import 'package:zean/game/assets.dart';
+import 'package:zean/game/home.dart'; // Asegúrate de que LevelIndicator esté correctamente importado
 
 class MisionesPage extends StatelessWidget {
   const MisionesPage({Key? key}) : super(key: key);
@@ -70,21 +71,21 @@ class MisionesPage extends StatelessWidget {
                 description:
                     "Registra al menos 1.5 litros de agua consumidos al día durante 5 días.",
                 points: "+50",
-                icon: Icons.local_drink,
+                icon: Assets.lente, // Ruta a tu icono
               ),
               _buildMissionCard(
                 title: "Chef Saludable",
                 description:
                     "Prepara al menos 5 comidas basadas en las recomendaciones de tu plan alimenticio.",
                 points: "+60",
-                icon: Icons.restaurant_menu,
+                icon: Assets.sombrero, // Ruta a tu icono
               ),
               _buildMissionCard(
                 title: "Reto Activo",
                 description:
                     "Realiza actividad física durante al menos 30 minutos en 3 días de la semana.",
                 points: "+50",
-                icon: Icons.directions_run,
+                icon: Assets.bigote, // Ruta a tu icono
               ),
             ],
           ),
@@ -97,7 +98,7 @@ class MisionesPage extends StatelessWidget {
     required String title,
     required String description,
     required String points,
-    IconData? icon,
+    String? icon, // Ruta opcional al icono
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12.0),
@@ -136,10 +137,10 @@ class MisionesPage extends StatelessWidget {
           Column(
             children: [
               if (icon != null)
-                Icon(
+                Image.asset(
                   icon,
-                  size: 32,
-                  color: Colors.amber,
+                  width: 150,
+                  height: 150,
                 ),
               const SizedBox(height: 10),
               Text(

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
+import 'package:zean/game/misiones.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
