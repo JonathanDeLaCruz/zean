@@ -68,8 +68,7 @@ class EncuestaAviso extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color(0xFFFFA726), // Color del botón
+                        backgroundColor: const Color(0xFFFFA726), // Color del botón
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

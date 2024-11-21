@@ -23,6 +23,7 @@ class SugerenciaPage extends StatelessWidget {
             children: [
               // Encabezado
               CustomHeader(
+                isTablet: isTablet,
                 title: "SUGERENCIAS",
                 onAvatarTap: () {
                   // Navegar a la página de perfil

@@ -5,6 +5,9 @@ class RegistroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -13,9 +16,12 @@ class RegistroPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "Registro de glucosa",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: isTablet ? 24 : 18,
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -24,69 +30,89 @@ class RegistroPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Título
-              const Center(
+              Center(
                 child: Text(
-                  "REGISTRO DE PARAMETROS",
+                  "REGISTRO DE PARÁMETROS",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: isTablet ? 24 : 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Campos de entrada
-              _buildInputField(label: "Glucosa:", hint: "Nivel de glucosa en mg/dL"),
-              const SizedBox(height: 20),
               _buildInputField(
-                  label: "Oxigenación:", hint: "Porcentaje de oxigenación"),
-              const SizedBox(height: 20),
-              _buildInputField(label: "Presión:", hint: "Porcentaje de presión"),
-              const SizedBox(height: 20),
-              _buildInputField(label: "Sueño:", hint: "Horas de sueño"),
-              const SizedBox(height: 20),
+                label: "Glucosa:",
+                hint: "Nivel de glucosa en mg/dL",
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 30 : 20),
               _buildInputField(
-                  label: "Ritmo cardiaco:", hint: "Ritmo cardiaco en LPM"),
-              const SizedBox(height: 40),
+                label: "Oxigenación:",
+                hint: "Porcentaje de oxigenación",
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 30 : 20),
+              _buildInputField(
+                label: "Presión:",
+                hint: "Porcentaje de presión",
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 30 : 20),
+              _buildInputField(
+                label: "Sueño:",
+                hint: "Horas de sueño",
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 30 : 20),
+              _buildInputField(
+                label: "Ritmo cardiaco:",
+                hint: "Ritmo cardiaco en LPM",
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 50 : 40),
 
               // Mensaje y conejo
               Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Los datos que ingreses deben ser lo más precisos posibles para su correcto uso. Usa tu glucómetro o acude con un médico para mayor precisión",
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(
+                          fontSize: isTablet ? 16 : 12,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: isTablet ? 20 : 10),
                   Image.asset(
                     'assets/images/conejo.png', // Ruta a la imagen del conejo
-                    width: 100,
-                    height: 100,
+                    width: isTablet ? 150 : 100,
+                    height: isTablet ? 150 : 100,
                     fit: BoxFit.contain,
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: isTablet ? 50 : 40),
 
               // Botón Enviar
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -98,14 +124,19 @@ class RegistroPage extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF53746E),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(
+                        vertical: isTablet ? 20 : 16,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Enviar",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: isTablet ? 20 : 16,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -117,19 +148,23 @@ class RegistroPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInputField({required String label, required String hint}) {
+  Widget _buildInputField({
+    required String label,
+    required String hint,
+    required bool isTablet,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: isTablet ? 18 : 14,
             fontWeight: FontWeight.bold,
             color: Colors.teal,
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: isTablet ? 12 : 10),
         TextField(
           decoration: InputDecoration(
             hintText: hint,
@@ -139,9 +174,9 @@ class RegistroPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 16,
+            contentPadding: EdgeInsets.symmetric(
+              vertical: isTablet ? 20 : 16,
+              horizontal: isTablet ? 20 : 16,
             ),
           ),
         ),
