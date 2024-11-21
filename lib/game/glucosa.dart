@@ -7,7 +7,7 @@ class GlucosaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Obtén las dimensiones de la pantalla
     final size = MediaQuery.of(context).size;
-    final isTablet = size.width > 600; // Determina si es tablet
+    final isTablet = size.width > 600;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -45,27 +45,42 @@ class GlucosaPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
-              // Círculo del nivel de glucosa
-              Container(
-                width: isTablet ? 200 : 150,
-                height: isTablet ? 200 : 150,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.yellow,
-                    width: isTablet ? 6 : 4,
-                  ),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  "100\nmg/dL",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: isTablet ? 32 : 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+              // Indicador decorativo del nivel de glucosa
+              SizedBox(
+                width: isTablet ? 300 : 250,
+                height: isTablet ? 300 : 250,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Círculo decorativo
+                    CustomPaint(
+                      size: Size(isTablet ? 300 : 250, isTablet ? 300 : 250),
+                      painter: GlucoseCirclePainter(),
+                    ),
+                    // Texto en el centro
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "100",
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "mg/dL",
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 30),
@@ -75,10 +90,10 @@ class GlucosaPage extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Dos elementos por fila
-                  mainAxisSpacing: 16, // Espacio entre filas
-                  crossAxisSpacing: 16, // Espacio entre columnas
-                  childAspectRatio: 2.5, // Ajusta el tamaño de los cuadros
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  childAspectRatio: 2.5,
                 ),
                 children: [
                   _buildIndicatorCard(
@@ -87,7 +102,6 @@ class GlucosaPage extends StatelessWidget {
                     description: "Tus niveles de oxigenación",
                     progressValue: 0.95,
                     progressColor: Colors.blue,
-                    isTablet: isTablet,
                   ),
                   _buildIndicatorCard(
                     title: "Presión",
@@ -95,7 +109,6 @@ class GlucosaPage extends StatelessWidget {
                     description: "Tus niveles de presión",
                     progressValue: 0.75,
                     progressColor: Colors.red,
-                    isTablet: isTablet,
                   ),
                   _buildIndicatorCard(
                     title: "Horas de sueño",
@@ -103,7 +116,6 @@ class GlucosaPage extends StatelessWidget {
                     description: "Tus horas de sueño",
                     progressValue: 0.2,
                     progressColor: Colors.red,
-                    isTablet: isTablet,
                   ),
                   _buildIndicatorCard(
                     title: "Ritmo Cardíaco",
@@ -111,7 +123,6 @@ class GlucosaPage extends StatelessWidget {
                     description: "Tus niveles de ritmo cardíaco",
                     progressValue: 0.79,
                     progressColor: Colors.blueGrey,
-                    isTablet: isTablet,
                   ),
                 ],
               ),
@@ -155,7 +166,6 @@ class GlucosaPage extends StatelessWidget {
     required String description,
     required double progressValue,
     required Color progressColor,
-    required bool isTablet,
   }) {
     return Container(
       padding: const EdgeInsets.all(8.0),
@@ -169,8 +179,8 @@ class GlucosaPage extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              fontSize: isTablet ? 18 : 14,
+            style: const TextStyle(
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -183,21 +193,57 @@ class GlucosaPage extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             value,
-            style: TextStyle(
-              fontSize: isTablet ? 20 : 16,
+            style: const TextStyle(
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             description,
-            style: TextStyle(
-              fontSize: isTablet ? 14 : 12,
+            style: const TextStyle(
+              fontSize: 12,
               color: Colors.grey,
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class GlucoseCirclePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paintOuterCircle = Paint()
+      ..color = Colors.yellow
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 6;
+
+    final paintInnerCircle = Paint()
+      ..color = Colors.teal
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2.5;
+
+    // Dibuja el círculo exterior
+    canvas.drawCircle(center, radius, paintOuterCircle);
+
+    // Dibuja el círculo interior
+    canvas.drawCircle(center, radius - 10, paintInnerCircle);
+
+    // Dibuja puntos decorativos
+    final pointPaint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(Offset(center.dx + radius, center.dy), 5, pointPaint);
+    canvas.drawCircle(Offset(center.dx - radius, center.dy), 5, pointPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
 

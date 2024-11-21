@@ -7,6 +7,9 @@ class EncuestaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     // Datos estáticos para pruebas
     final String titulo = "Seguimiento semanal";
     final List<Map<String, dynamic>> preguntas = [
@@ -47,9 +50,12 @@ class EncuestaPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "Encuesta",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: isTablet ? 24 : 18,
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -60,29 +66,30 @@ class EncuestaPage extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
                     child: Text(
                       titulo,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: isTablet ? 28 : 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: isTablet ? 30 : 20),
 
                   // Preguntas dinámicas
                   ...preguntas.map(
                     (pregunta) => Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
+                      padding: EdgeInsets.only(bottom: isTablet ? 30.0 : 20.0),
                       child: _buildQuestion(
                         pregunta["pregunta"],
                         List<String>.from(pregunta["opciones"]),
+                        isTablet: isTablet,
                       ),
                     ),
                   ),
@@ -93,7 +100,7 @@ class EncuestaPage extends StatelessWidget {
 
           // Botón Enviar
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -105,14 +112,19 @@ class EncuestaPage extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF53746E),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(
+                    vertical: isTablet ? 20 : 16,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "Enviar",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: isTablet ? 20 : 16,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -122,9 +134,9 @@ class EncuestaPage extends StatelessWidget {
     );
   }
 
-  Widget _buildQuestion(String question, List<String> options) {
+  Widget _buildQuestion(String question, List<String> options, {required bool isTablet}) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
       decoration: BoxDecoration(
         color: Colors.blue[50],
         borderRadius: BorderRadius.circular(12),
@@ -134,8 +146,8 @@ class EncuestaPage extends StatelessWidget {
         children: [
           Text(
             question,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: isTablet ? 18 : 14,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
@@ -144,11 +156,11 @@ class EncuestaPage extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Dos opciones por fila
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              childAspectRatio: 3, // Ajusta la proporción para un mejor diseño
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isTablet ? 3 : 2, // Tres opciones por fila en tablets
+              mainAxisSpacing: 12.0,
+              crossAxisSpacing: 12.0,
+              childAspectRatio: isTablet ? 4 : 3, // Proporción ajustada para tablets
             ),
             itemCount: options.length,
             itemBuilder: (context, index) {
@@ -163,14 +175,16 @@ class EncuestaPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isTablet ? 24 : 16,
+                    vertical: isTablet ? 14 : 10,
                   ),
                 ),
                 child: Text(
                   options[index],
-                  style: const TextStyle(fontSize: 12),
+                  style: TextStyle(
+                    fontSize: isTablet ? 16 : 12,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               );

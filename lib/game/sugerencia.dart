@@ -8,11 +8,14 @@ class SugerenciaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -21,56 +24,56 @@ class SugerenciaPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircleAvatar(
-                    radius: 25,
+                    radius: isTablet ? 35 : 25,
                     backgroundColor: Colors.grey[300],
-                    child: const Icon(
+                    child: Icon(
                       Icons.person,
                       color: Colors.brown,
-                      size: 32,
+                      size: isTablet ? 40 : 32,
                     ),
                   ),
-                  const Text(
+                  Text(
                     "SUGERENCIAS",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: isTablet ? 24 : 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.teal,
                     ),
                   ),
-                  const Icon(
+                  Icon(
                     Icons.notifications,
                     color: Colors.orange,
-                    size: 32,
+                    size: isTablet ? 40 : 32,
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Sugerencias (Carrusel de imágenes)
               SizedBox(
-                height: 100,
+                height: isTablet ? 150 : 100,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    _buildSuggestionImage(Assets.uno, 1, context),
-                    _buildSuggestionImage(Assets.dos, 2, context),
-                    _buildSuggestionImage(Assets.tres, 3, context),
-                    _buildSuggestionImage(Assets.cuatro, 4, context),
+                    _buildSuggestionImage(Assets.uno, 1, context, isTablet),
+                    _buildSuggestionImage(Assets.dos, 2, context, isTablet),
+                    _buildSuggestionImage(Assets.tres, 3, context, isTablet),
+                    _buildSuggestionImage(Assets.cuatro, 4, context, isTablet),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Encuestas
-              const Text(
+              Text(
                 "ENCUESTAS",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: isTablet ? 24 : 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal,
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: isTablet ? 20 : 10),
 
               // Tarjetas de encuestas
               _buildSurveyCard(
@@ -78,24 +81,28 @@ class SugerenciaPage extends StatelessWidget {
                 title: "Experiencia de Vida con Diabetes",
                 timeRemaining: "14hrs",
                 context: context,
+                isTablet: isTablet,
               ),
               _buildSurveyCard(
                 id: 2,
                 title: "Impacto de la Diabetes en la Vida Diaria",
                 timeRemaining: "1d",
                 context: context,
+                isTablet: isTablet,
               ),
               _buildSurveyCard(
                 id: 3,
                 title: "Percepción y Educación sobre la Diabetes",
                 timeRemaining: "1d 12hrs",
                 context: context,
+                isTablet: isTablet,
               ),
               _buildSurveyCard(
                 id: 4,
                 title: "Retos y Soluciones en el Tratamiento de la Diabetes",
                 timeRemaining: "2d",
                 context: context,
+                isTablet: isTablet,
               ),
             ],
           ),
@@ -104,7 +111,8 @@ class SugerenciaPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSuggestionImage(String imagePath, int id, BuildContext context) {
+  Widget _buildSuggestionImage(
+      String imagePath, int id, BuildContext context, bool isTablet) {
     return GestureDetector(
       onTap: () {
         // Navegación a la página de recomendaciones pasando el id
@@ -116,9 +124,9 @@ class SugerenciaPage extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        width: 100,
-        height: 100,
+        margin: EdgeInsets.symmetric(horizontal: isTablet ? 16.0 : 8.0),
+        width: isTablet ? 150 : 100,
+        height: isTablet ? 150 : 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           image: DecorationImage(
@@ -135,11 +143,12 @@ class SugerenciaPage extends StatelessWidget {
     required String title,
     required String timeRemaining,
     required BuildContext context,
+    required bool isTablet,
     bool isHighlighted = false,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12.0),
-      padding: const EdgeInsets.all(12.0),
+      margin: EdgeInsets.only(bottom: isTablet ? 16.0 : 12.0),
+      padding: EdgeInsets.all(isTablet ? 16.0 : 12.0),
       decoration: BoxDecoration(
         color: isHighlighted ? Colors.blue[50] : Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
@@ -149,18 +158,18 @@ class SugerenciaPage extends StatelessWidget {
         children: [
           // Texto del título y tiempo restante
           Expanded(
-            flex: 6, // Ocupa 6 columnas del espacio disponible
+            flex: 6,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: isTablet ? 18 : 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: isTablet ? 8 : 5),
                 Row(
                   children: [
                     const Icon(
@@ -171,8 +180,8 @@ class SugerenciaPage extends StatelessWidget {
                     const SizedBox(width: 5),
                     Text(
                       "Termina en: $timeRemaining",
-                      style: const TextStyle(
-                        fontSize: 12,
+                      style: TextStyle(
+                        fontSize: isTablet ? 14 : 12,
                         color: Colors.grey,
                       ),
                     ),
@@ -181,10 +190,11 @@ class SugerenciaPage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 10), // Espacio entre texto y botón
+          const SizedBox(width: 10),
+
           // Botón Responder
           Expanded(
-            flex: 2, // Ocupa 2 columnas del espacio disponible
+            flex: 2,
             child: ElevatedButton(
               onPressed: () {
                 // Navegación a la página de encuestas pasando el id
@@ -200,15 +210,15 @@ class SugerenciaPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12, // Tamaño vertical adecuado
+                padding: EdgeInsets.symmetric(
+                  vertical: isTablet ? 14 : 12,
                 ),
               ),
-              child: const Text(
+              child: Text(
                 "Responder",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: isTablet ? 14 : 12,
                 ),
               ),
             ),

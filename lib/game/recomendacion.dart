@@ -8,8 +8,11 @@ class RecomendacionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     // Datos de prueba estáticos (puedes reemplazarlos según el id en el futuro)
-    final String titulo = "RECOMENDACIÓN\nSOBRE DIETA";
+    final String titulo = "RECOMENDACIÓN SOBRE DIETA";
     final String descripcion =
         "No existe una dieta o un plan de comidas específico que funcione para todos. Es posible que su profesional de la salud le pida que consulte con un dietista registrado o un educador en diabetes que pueda ayudarle a diseñar el mejor plan de alimentación para usted. El plan considerará:";
     final List<String> puntos = [
@@ -33,9 +36,12 @@ class RecomendacionPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "Recomendaciones",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: isTablet ? 24 : 18,
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -44,9 +50,9 @@ class RecomendacionPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
             decoration: BoxDecoration(
               color: Colors.blue[50],
               borderRadius: BorderRadius.circular(12),
@@ -58,15 +64,15 @@ class RecomendacionPage extends StatelessWidget {
                 Row(
                   children: [
                     CircleAvatar(
-                      radius: 30,
+                      radius: isTablet ? 40 : 30,
                       backgroundImage: AssetImage(iconPath), // Ruta a tu imagen
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Text(
                         titulo,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: TextStyle(
+                          fontSize: isTablet ? 22 : 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.teal,
                         ),
@@ -74,29 +80,35 @@ class RecomendacionPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
                 // Descripción
                 Text(
                   descripcion,
-                  style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  style: TextStyle(
+                    fontSize: isTablet ? 16 : 14,
+                    color: Colors.black87,
+                  ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
 
                 // Lista de puntos
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: puntos
-                      .map((punto) => Text(
-                            "• $punto",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.black87,
+                      .map((punto) => Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              "• $punto",
+                              style: TextStyle(
+                                fontSize: isTablet ? 16 : 14,
+                                color: Colors.black87,
+                              ),
                             ),
                           ))
                       .toList(),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
                 // Imagen
                 Container(
@@ -109,24 +121,29 @@ class RecomendacionPage extends StatelessWidget {
                     child: Image.asset(
                       imagePath, // Ruta a la imagen de dieta
                       fit: BoxFit.cover,
+                      height: isTablet ? 400 : 250,
+                      width: double.infinity,
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
                 // Pregunta y respuesta
                 Text(
                   pregunta,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: isTablet ? 20 : 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Text(
                   respuesta,
-                  style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  style: TextStyle(
+                    fontSize: isTablet ? 16 : 14,
+                    color: Colors.black87,
+                  ),
                 ),
               ],
             ),
