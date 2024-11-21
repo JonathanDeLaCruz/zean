@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
 
 class EncuestaAviso extends StatelessWidget {
-  const EncuestaAviso({Key? key}) : super(key: key);
+  const EncuestaAviso({super.key});
 
   @override
   Widget build(BuildContext context) {

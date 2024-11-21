@@ -92,70 +92,81 @@ class LevelIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: const Color(0xFF53746E),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      height: 60,
-      width: 360,
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.grey[300],
-            child: const Icon(
-              Icons.person,
-              color: Colors.brown,
-            ),
+    return GestureDetector(
+      onTap: () {
+        // Navegar a la vista de MisionesPage
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MisionesPage(),
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "NIVEL 1",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color(0xFF53746E),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        height: 60,
+        width: 360,
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.grey[300],
+              child: const Icon(
+                Icons.person,
+                color: Colors.brown,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        "NIVEL 1",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "NIVEL 2",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        "NIVEL 2",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: LinearProgressIndicator(
-                    value: 0.9,
-                    backgroundColor: Colors.grey[400],
-                    color: Colors.yellow[700],
-                    minHeight: 10,
+                    ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 5),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: LinearProgressIndicator(
+                      value: 0.9,
+                      backgroundColor: Colors.grey[400],
+                      color: Colors.yellow[700],
+                      minHeight: 10,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 10),
-          const Icon(
-            Icons.notifications,
-            color: Colors.white,
-          ),
-        ],
+            const SizedBox(width: 10),
+            const Icon(
+              Icons.notifications,
+              color: Colors.white,
+            ),
+          ],
+        ),
       ),
     );
   }
