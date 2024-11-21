@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   motion_tab_bar: ^2.0.4
   flame: ^1.21.0
+  qr_code_scanner: ^1.0.0
+  qr_flutter: ^4.1.0
 
 
   # The following adds the Cupertino Icons font to your application.

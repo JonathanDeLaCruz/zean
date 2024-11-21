@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
+import 'package:zean/game/diabetes.dart';
 
 class EncuestaAviso extends StatelessWidget {
   const EncuestaAviso({super.key});
@@ -58,10 +59,17 @@ class EncuestaAviso extends StatelessWidget {
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () {
-                        // Navegar a la siguiente página o funcionalidad
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const DiabetesPage(), // Asegúrate de tener CrearPage implementado
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFFA726), // Color del botón
+                        backgroundColor:
+                            const Color(0xFFFFA726), // Color del botón
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

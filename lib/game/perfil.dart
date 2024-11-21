@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zean/game/contactos.dart';
+import 'package:zean/game/encuesta_aviso.dart';
 import 'package:zean/game/login.dart';
+import 'package:zean/game/privacidad.dart';
+import 'package:zean/game/vida.dart';
 
 class PerfilPage extends StatelessWidget {
   const PerfilPage({Key? key}) : super(key: key);
@@ -87,9 +91,9 @@ class PerfilPage extends StatelessWidget {
               const SizedBox(height: 20),
 
               // Opciones adicionales
-              _SettingsOption(title: "Ajustes de estilo de vida", destination: LoginPage(),),
-              _SettingsOption(title: "Ajustes de privacidad", destination: LoginPage(),),
-              _SettingsOption(title: "Añadir contacto", destination: LoginPage(),),
+              _SettingsOption(title: "Ajustes de estilo de vida", destination: VidaPage(),),
+              _SettingsOption(title: "Ajustes de privacidad", destination: PrivacidadPage(),),
+              _SettingsOption(title: "Añadir contacto", destination: ContactosPage(),),
               _SettingsOption(title: "Cerrar sesión", destination: LoginPage(),),
               const SizedBox(height: 20),
 
