@@ -6,78 +6,57 @@ class CrearPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final isTablet = size.width > 600; // Determina si es tablet o no.
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: isTablet ? 70 : 50),
-
+              const SizedBox(height: 50),
               // Logo
               Container(
-                width: isTablet ? 300 : 200,
-                height: isTablet ? 150 : 100,
+                width: 200,
+                height: 100,
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   "LOGIN",
                   style: TextStyle(
-                    fontSize: isTablet ? 20 : 16,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54,
                   ),
                 ),
               ),
-              SizedBox(height: isTablet ? 30 : 20),
+              const SizedBox(height: 20),
 
               // Título
-              Text(
+              const Text(
                 "CREAR CUENTA",
                 style: TextStyle(
-                  fontSize: isTablet ? 24 : 18,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal,
                 ),
               ),
-              SizedBox(height: isTablet ? 30 : 20),
+              const SizedBox(height: 20),
 
               // Campos de entrada
-              _buildInputField(
-                label: "Nombre de usuario",
-                isTablet: isTablet,
-              ),
-              SizedBox(height: isTablet ? 20 : 10),
-              _buildInputField(
-                label: "Correo electrónico",
-                isTablet: isTablet,
-              ),
-              SizedBox(height: isTablet ? 20 : 10),
-              _buildInputField(
-                label: "Confirmar correo electrónico",
-                isTablet: isTablet,
-              ),
-              SizedBox(height: isTablet ? 20 : 10),
-              _buildInputField(
-                label: "Contraseña",
-                obscureText: true,
-                isTablet: isTablet,
-              ),
-              SizedBox(height: isTablet ? 20 : 10),
-              _buildInputField(
-                label: "Confirmar contraseña",
-                obscureText: true,
-                isTablet: isTablet,
-              ),
-              SizedBox(height: isTablet ? 30 : 20),
+              _buildInputField(label: "Nombre de usuario"),
+              const SizedBox(height: 10),
+              _buildInputField(label: "Correo electrónico"),
+              const SizedBox(height: 10),
+              _buildInputField(label: "Confirmar correo electrónico"),
+              const SizedBox(height: 10),
+              _buildInputField(label: "Contraseña", obscureText: true),
+              const SizedBox(height: 10),
+              _buildInputField(label: "Confirmar contraseña", obscureText: true),
+              const SizedBox(height: 20),
 
               // Botón Crear
               SizedBox(
@@ -87,53 +66,44 @@ class CrearPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const InformacionPage(),
+                        builder: (context) =>
+                            const InformacionPage(), // Asegúrate de tener CrearPage implementado
                       ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF53746E),
-                    padding: EdgeInsets.symmetric(
-                      vertical: isTablet ? 20 : 16,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Crear",
-                    style: TextStyle(
-                      fontSize: isTablet ? 20 : 16,
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),
-              SizedBox(height: isTablet ? 20 : 10),
+              const SizedBox(height: 10),
 
               // Botón Cancelar
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Regresa a la pantalla anterior
-                    Navigator.pop(context);
+                    // Lógica para cancelar
+                    Navigator.pop(context); // Regresa a la pantalla anterior
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
-                    padding: EdgeInsets.symmetric(
-                      vertical: isTablet ? 20 : 16,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Cancelar",
-                    style: TextStyle(
-                      fontSize: isTablet ? 20 : 16,
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),
@@ -144,11 +114,7 @@ class CrearPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInputField({
-    required String label,
-    bool obscureText = false,
-    required bool isTablet,
-  }) {
+  Widget _buildInputField({required String label, bool obscureText = false}) {
     return TextField(
       obscureText: obscureText,
       decoration: InputDecoration(
@@ -159,9 +125,9 @@ class CrearPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
-        contentPadding: EdgeInsets.symmetric(
-          vertical: isTablet ? 20 : 16,
-          horizontal: isTablet ? 20 : 16,
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 16,
         ),
       ),
     );
