@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:zean/game/modal_no_datos.dart';
+import 'package:zean/game/notificaciones.dart';
+import 'package:zean/game/perfil.dart';
 
 class GlucosaPage extends StatelessWidget {
   const GlucosaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Obtén las dimensiones de la pantalla
-    final size = MediaQuery.of(context).size;
-    final isTablet = size.width > 600;
+    if (true) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ModalNoDatos.show(context); // Invoca el método estático de tu modal
+      });
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -18,32 +23,27 @@ class GlucosaPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Encabezado
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircleAvatar(
-                    radius: isTablet ? 35 : 25,
-                    backgroundColor: Colors.grey[300],
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.brown,
-                      size: isTablet ? 40 : 32,
+              CustomHeader(
+                title: "NIVEL DE GLUCOSA",
+                onAvatarTap: () {
+                  // Navegar a la página de perfil
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const PerfilPage(), // Implementa PerfilPage
                     ),
-                  ),
-                  Text(
-                    "NIVEL DE GLUCOSA",
-                    style: TextStyle(
-                      fontSize: isTablet ? 24 : 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal,
+                  );
+                },
+                onNotificationTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const NotificacionesPage(), // Implementa PerfilPage
                     ),
-                  ),
-                  Icon(
-                    Icons.notifications,
-                    color: Colors.orange,
-                    size: isTablet ? 40 : 32,
-                  ),
-                ],
+                  );
+                },
               ),
               const SizedBox(height: 30),
 
