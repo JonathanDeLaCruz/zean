@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class FamiliarPage extends StatefulWidget {
   const FamiliarPage({Key? key}) : super(key: key);
@@ -16,14 +15,22 @@ class _FamiliarPageState extends State<FamiliarPage> {
   final TextEditingController titularController = TextEditingController();
 
   @override
+  void dispose() {
+    // Libera los controladores al salir de la pantalla
+    nombreController.dispose();
+    telefonoController.dispose();
+    parentescoController.dispose();
+    titularController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
           "Registro de contacto",
@@ -78,111 +85,37 @@ class _FamiliarPageState extends State<FamiliarPage> {
             const SizedBox(height: 40),
 
             // Botón Guardar
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Contacto guardado")),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF53746E),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text(
-                  "Guardar",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            // Botón Escanear
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () async {
-                  final qrResult = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const QRScannerPage(),
-                    ),
-                  );
-
-                  if (qrResult != null) {
-                    final Map<String, dynamic> data =
-                        Map<String, dynamic>.from(qrResult);
-
-                    // Prerellena los campos
-                    setState(() {
-                      nombreController.text = data['nombre'];
-                      telefonoController.text = data['telefono'];
-                      parentescoController.text = data['parentesco'];
-                      titularController.text = data['titular'];
-                    });
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Formulario prerellenado")),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF53746E),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Column(
-                  children: const [
-                    Text(
-                      "Escanear",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
+            _buildActionButton(
+              label: "Guardar",
+              color: const Color(0xFF53746E),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Contacto guardado")),
+                );
+              },
             ),
             const SizedBox(height: 10),
 
             // Botón Generar QR
-            Center(
-              child: SizedBox(
-                width: double.infinity, // Hace que el botón ocupe todo el ancho
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QRGeneratorPage(
-                          data: {
-                            'nombre': nombreController.text,
-                            'telefono': telefonoController.text,
-                            'parentesco': parentescoController.text,
-                            'titular': titularController.text,
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+            _buildActionButton(
+              label: "Generar QR",
+              color: Colors.orange,
+              icon: Icons.qr_code,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QRGeneratorPage(
+                      data: {
+                        'nombre': nombreController.text,
+                        'telefono': telefonoController.text,
+                        'parentesco': parentescoController.text,
+                        'titular': titularController.text,
+                      },
                     ),
                   ),
-                  child: const Icon(
-                    Icons.qr_code, // Icono de QR
-                    color: Colors.white,
-                    size: 24, // Ajusta el tamaño del icono según sea necesario
-                  ),
-                ),
-              ),
+                );
+              },
             ),
           ],
         ),
@@ -226,22 +159,40 @@ class _FamiliarPageState extends State<FamiliarPage> {
       ],
     );
   }
-}
 
-class QRScannerPage extends StatelessWidget {
-  const QRScannerPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: QRView(
-        key: GlobalKey(debugLabel: 'QR'),
-        onQRViewCreated: (controller) {
-          controller.scannedDataStream.listen((scanData) {
-            controller.pauseCamera();
-            Navigator.pop(context, scanData.code);
-          });
-        },
+  Widget _buildActionButton({
+    required String label,
+    required Color color,
+    IconData? icon,
+    required VoidCallback onPressed,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        child: icon == null
+            ? Text(
+                label,
+                style: const TextStyle(fontSize: 16, color: Colors.white),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon, color: Colors.white),
+                  const SizedBox(width: 8),
+                  Text(
+                    label,
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
       ),
     );
   }
@@ -254,17 +205,20 @@ class QRGeneratorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String qrData =
+        data.entries.map((entry) => '${entry.key}: ${entry.value}').join('\n');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Código QR"),
         backgroundColor: Colors.teal,
       ),
       body: Center(
-        child: QrImageView(
-          data: data.toString(),
-          version: QrVersions.auto,
-          size: 200.0,
-          backgroundColor: Colors.white,
+        child: QrImageView( // Usa QrImageView si QrImage no funciona
+          data: qrData, // Datos para el QR
+          version: QrVersions.auto, // Ajuste automático de versión
+          size: 200.0, // Tamaño del QR
+          backgroundColor: Colors.white, // Fondo blanco
         ),
       ),
     );

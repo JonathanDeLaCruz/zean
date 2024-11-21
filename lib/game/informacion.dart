@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zean/game/home.dart';
 import 'package:zean/main.dart';
 
 class InformacionPage extends StatefulWidget {

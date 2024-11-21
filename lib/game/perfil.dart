@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zean/game/contactos.dart';
-import 'package:zean/game/encuesta_aviso.dart';
 import 'package:zean/game/login.dart';
 import 'package:zean/game/privacidad.dart';
 import 'package:zean/game/vida.dart';

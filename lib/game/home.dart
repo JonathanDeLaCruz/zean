@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
 import 'package:zean/game/contactos.dart';
 import 'package:zean/game/encuesta_aviso.dart';
-import 'package:zean/game/familiar.dart';
 import 'package:zean/game/misiones.dart';
 import 'package:zean/game/notificaciones.dart';
 import 'package:zean/game/perfil.dart';
@@ -250,6 +249,7 @@ class HomePage extends StatelessWidget {
 
   Future<ImageProvider> _loadBackgroundImage() async {
     final image = await Flame.images.load(Assets.fondo);
+
     return MemoryImage(
       (await image.toByteData(format: ImageByteFormat.png))!
           .buffer
