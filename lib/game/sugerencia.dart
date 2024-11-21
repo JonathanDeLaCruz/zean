@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zean/game/assets.dart';
 import 'package:zean/game/encuesta.dart';
-import 'package:zean/game/notificaciones.dart';
-import 'package:zean/game/perfil.dart';
 import 'package:zean/game/recomendacion.dart';
 
 class SugerenciaPage extends StatelessWidget {
@@ -22,27 +20,32 @@ class SugerenciaPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Encabezado
-              CustomHeader(
-                title: "SUGERENCIAS",
-                onAvatarTap: () {
-                  // Navegar a la página de perfil
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const PerfilPage(), // Implementa PerfilPage
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircleAvatar(
+                    radius: isTablet ? 35 : 25,
+                    backgroundColor: Colors.grey[300],
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.brown,
+                      size: isTablet ? 40 : 32,
                     ),
-                  );
-                },
-                onNotificationTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const NotificacionesPage(), // Implementa PerfilPage
+                  ),
+                  Text(
+                    "SUGERENCIAS",
+                    style: TextStyle(
+                      fontSize: isTablet ? 24 : 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.teal,
                     ),
-                  );
-                },
+                  ),
+                  Icon(
+                    Icons.notifications,
+                    color: Colors.orange,
+                    size: isTablet ? 40 : 32,
+                  ),
+                ],
               ),
               SizedBox(height: isTablet ? 30 : 20),
 

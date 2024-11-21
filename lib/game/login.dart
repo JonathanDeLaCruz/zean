@@ -6,51 +6,61 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
+              SizedBox(height: isTablet ? 70 : 50),
               // Logo
               Container(
-                width: 200,
-                height: 100,
+                width: isTablet ? 300 : 200,
+                height: isTablet ? 150 : 100,
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 alignment: Alignment.center,
-                child: const Text(
+                child: Text(
                   "LOGO ZENULIN",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: isTablet ? 20 : 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Título
-              const Text(
+              Text(
                 "INICIAR SESIÓN",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: isTablet ? 24 : 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Campos de entrada
-              _buildInputField(label: "Usuario"),
-              const SizedBox(height: 10),
-              _buildInputField(label: "Contraseña", obscureText: true),
-              const SizedBox(height: 20),
+              _buildInputField(
+                label: "Usuario",
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 20 : 10),
+              _buildInputField(
+                label: "Contraseña",
+                obscureText: true,
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Botón Iniciar
               SizedBox(
@@ -64,23 +74,23 @@ class LoginPage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF53746E),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(
+                      vertical: isTablet ? 20 : 16,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Iniciar",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ],
+                  child: Text(
+                    "Iniciar",
+                    style: TextStyle(
+                      fontSize: isTablet ? 20 : 16,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: isTablet ? 20 : 10),
 
               // Texto para registro
               Row(
@@ -90,10 +100,10 @@ class LoginPage extends StatelessWidget {
                     onTap: () {
                       // Lógica para "No tengo cuenta"
                     },
-                    child: const Text(
+                    child: Text(
                       "No tengo cuenta",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: isTablet ? 16 : 14,
                         color: Colors.teal,
                         decoration: TextDecoration.underline,
                       ),
@@ -101,7 +111,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: isTablet ? 20 : 10),
 
               // Botón Crear cuenta
               SizedBox(
@@ -112,25 +122,29 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const CrearPage(), // Asegúrate de tener CrearPage implementado
+                        builder: (context) => const CrearPage(),
                       ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(
+                      vertical: isTablet ? 20 : 16,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Crear cuenta",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: isTablet ? 20 : 16,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 40 : 20),
 
               // Conejo y mensaje
               Row(
@@ -138,23 +152,25 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(isTablet ? 20.0 : 16.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Text(
+                      child: Text(
                         "BIENVENIDO A NUESTRA APP",
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(
+                          fontSize: isTablet ? 16 : 12,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: isTablet ? 20 : 10),
                   Image.asset(
                     'assets/images/conejo.png', // Ruta a la imagen del conejo
-                    width: 100,
-                    height: 100,
+                    width: isTablet ? 150 : 100,
+                    height: isTablet ? 150 : 100,
                     fit: BoxFit.contain,
                   ),
                 ],
@@ -166,7 +182,11 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInputField({required String label, bool obscureText = false}) {
+  Widget _buildInputField({
+    required String label,
+    bool obscureText = false,
+    required bool isTablet,
+  }) {
     return TextField(
       obscureText: obscureText,
       decoration: InputDecoration(
@@ -177,9 +197,9 @@ class LoginPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 16,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: isTablet ? 20 : 16,
+          horizontal: isTablet ? 20 : 16,
         ),
       ),
     );

@@ -6,6 +6,9 @@ class PerfilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -14,9 +17,12 @@ class PerfilPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "Perfil de usuario",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: isTablet ? 24 : 18,
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -25,7 +31,7 @@ class PerfilPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -33,38 +39,38 @@ class PerfilPage extends StatelessWidget {
               Column(
                 children: [
                   CircleAvatar(
-                    radius: 50,
+                    radius: isTablet ? 70 : 50,
                     backgroundColor: Colors.orange[100],
                     child: Icon(
                       Icons.person,
-                      size: 80,
+                      size: isTablet ? 100 : 80,
                       color: Colors.orange[800],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
+                  SizedBox(height: isTablet ? 20 : 10),
+                  Text(
                     "KRYS PERALTA",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: isTablet ? 28 : 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.orange,
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  const Text(
+                  SizedBox(height: isTablet ? 10 : 5),
+                  Text(
                     "CURP: GAPK020408MTCRRRA0",
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: isTablet ? 18 : 14,
                       color: Colors.grey,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Información detallada
               Container(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
                 decoration: BoxDecoration(
                   color: Colors.blue[50],
                   borderRadius: BorderRadius.circular(12),
@@ -84,43 +90,59 @@ class PerfilPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Opciones adicionales
-              _SettingsOption(title: "Ajustes de estilo de vida", destination: LoginPage(),),
-              _SettingsOption(title: "Ajustes de privacidad", destination: LoginPage(),),
-              _SettingsOption(title: "Añadir contacto", destination: LoginPage(),),
-              _SettingsOption(title: "Cerrar sesión", destination: LoginPage(),),
-              const SizedBox(height: 20),
+              _SettingsOption(
+                title: "Ajustes de estilo de vida",
+                destination: const LoginPage(),
+                isTablet: isTablet,
+              ),
+              _SettingsOption(
+                title: "Ajustes de privacidad",
+                destination: const LoginPage(),
+                isTablet: isTablet,
+              ),
+              _SettingsOption(
+                title: "Añadir contacto",
+                destination: const LoginPage(),
+                isTablet: isTablet,
+              ),
+              _SettingsOption(
+                title: "Cerrar sesión",
+                destination: const LoginPage(),
+                isTablet: isTablet,
+              ),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Footer
               Column(
-                children: const [
+                children: [
                   Text(
                     "Zenulin, seguimiento de diabetes\nVersión 1.0.0\n©2024 Zenulin.Inc",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: isTablet ? 16 : 12,
                       color: Colors.grey,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: isTablet ? 20 : 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Políticas de privacidad",
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: isTablet ? 16 : 12,
                           color: Colors.teal,
                           decoration: TextDecoration.underline,
                         ),
                       ),
-                      SizedBox(width: 20),
+                      SizedBox(width: isTablet ? 30 : 20),
                       Text(
                         "Condiciones de uso",
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: isTablet ? 16 : 12,
                           color: Colors.teal,
                           decoration: TextDecoration.underline,
                         ),
@@ -141,25 +163,27 @@ class _ProfileInfo extends StatelessWidget {
   final String label;
   final String value;
 
-  const _ProfileInfo({Key? key, required this.label, required this.value}) : super(key: key);
+  const _ProfileInfo({Key? key, required this.label, required this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isTablet = MediaQuery.of(context).size.width > 600;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: RichText(
         text: TextSpan(
           text: "$label:\n",
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: isTablet ? 18 : 14,
             fontWeight: FontWeight.bold,
             color: Colors.teal,
           ),
           children: [
             TextSpan(
               text: value,
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: isTablet ? 18 : 14,
                 fontWeight: FontWeight.normal,
                 color: Colors.black87,
               ),
@@ -173,9 +197,15 @@ class _ProfileInfo extends StatelessWidget {
 
 class _SettingsOption extends StatelessWidget {
   final String title;
-  final Widget destination; // Nueva propiedad para la pantalla de destino
+  final Widget destination;
+  final bool isTablet;
 
-  const _SettingsOption({Key? key, required this.title, required this.destination}) : super(key: key);
+  const _SettingsOption({
+    Key? key,
+    required this.title,
+    required this.destination,
+    required this.isTablet,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +213,6 @@ class _SettingsOption extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12.0),
       child: InkWell(
         onTap: () {
-          // Navegación a la pantalla de destino
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -192,7 +221,7 @@ class _SettingsOption extends StatelessWidget {
           );
         },
         child: Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 20.0 : 16.0),
           decoration: BoxDecoration(
             color: Colors.grey[200],
             borderRadius: BorderRadius.circular(12),
@@ -202,7 +231,10 @@ class _SettingsOption extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 14, color: Colors.black87),
+                style: TextStyle(
+                  fontSize: isTablet ? 18 : 14,
+                  color: Colors.black87,
+                ),
               ),
               const Icon(
                 Icons.arrow_forward_ios,
@@ -216,7 +248,6 @@ class _SettingsOption extends StatelessWidget {
     );
   }
 }
-
 
 void main() {
   runApp(const MaterialApp(
