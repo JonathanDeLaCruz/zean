@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:zean/game/login.dart';
+import 'package:zean/game/vida.dart';
+import 'package:zean/game/privacidad.dart';
+import 'package:zean/game/contactos.dart';
 
 class PerfilPage extends StatelessWidget {
   const PerfilPage({Key? key}) : super(key: key);
@@ -109,28 +113,56 @@ class PerfilPage extends StatelessWidget {
                   SettingsOption(
                     title: "Ajustes de estilo de vida",
                     icon: Icons.arrow_forward_ios,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const VidaPage(),
+          ),
+        );
+                    },
                     isTablet: isTablet,
                   ),
                   const Divider(),
                   SettingsOption(
                     title: "Ajustes de privacidad",
                     icon: Icons.arrow_forward_ios,
-                    onTap: () {},
+                    onTap: () {
+                                            Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PrivacidadPage(),
+          ),
+        );
+                    },
                     isTablet: isTablet,
                   ),
                   const Divider(),
                   SettingsOption(
                     title: "Añadir contacto",
                     icon: Icons.arrow_forward_ios,
-                    onTap: () {},
+                    onTap: () {
+                                            Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ContactosPage(),
+          ),
+        );
+                    },
                     isTablet: isTablet,
                   ),
                   const Divider(),
                   SettingsOption(
                     title: "Cerrar sesión",
                     icon: Icons.arrow_forward_ios,
-                    onTap: () {},
+                    onTap: () {
+                                            Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+          ),
+        );
+                    },
                     isTablet: isTablet,
                   ),
                 ],

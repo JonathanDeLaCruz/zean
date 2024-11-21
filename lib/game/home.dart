@@ -44,74 +44,93 @@ class HomePage extends StatelessWidget {
                 ),
                 // Imágenes adicionales
                 ..._buildImages(context),
-                if (showMessage) // Mostrar globo solo si la condición es true
-                  Positioned.fill(
-                    top: -300,
-                    child: Center(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Tarjeta de mensaje
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              padding: const EdgeInsets.all(20.0),
-                              decoration: BoxDecoration(
-                                color:
-                                    const Color(0xFFBEE4E1), // Color del globo
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Responde la encuesta sobre diabetes que aparece a continuación. Si decides no hacerlo, el anuncio permanecerá visible, pero podrás seguir usando la app normalmente.",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const EncuestaAviso(), // Asegúrate de tener CrearPage implementado
-                                        ),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(
-                                          0xFF53746E), // Color del botón
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 32,
-                                        vertical: 12,
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      "RESPONDER",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+if (showMessage) // Mostrar globo solo si la condición es true
+  Positioned(
+    top: MediaQuery.of(context).size.height * 0.2,
+    left: MediaQuery.of(context).size.width * 0.1,
+    right: MediaQuery.of(context).size.width * 0.1,
+    child: Stack(
+      clipBehavior: Clip.none,
+      children: [
+        // Globo de diálogo
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.8), // Fondo negro translúcido
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Responde la encuesta sobre diabetes que aparece a continuación. Si decides no hacerlo, el anuncio permanecerá visible, pero podrás seguir usando la app normalmente.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16, // Letra más grande
+                  color: Colors.white, // Texto blanco
+                ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EncuestaAviso(),
                     ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF53746E), // Color del botón
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
                   ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: const Text(
+                  "RESPONDER",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        // Círculos decorativos para simular el globo
+        Positioned(
+          bottom: -25,
+          left: MediaQuery.of(context).size.width * 0.4, // Centra el triángulo
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.8),
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: -50,
+          left: MediaQuery.of(context).size.width * 0.45, // Centra el círculo
+          child: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.8),
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
+      ],
+    ),
+  ),
+
                 Positioned(
                   bottom: 20,
                   left: 20,

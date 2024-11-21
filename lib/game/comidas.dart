@@ -6,6 +6,9 @@ class ComidasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -14,9 +17,12 @@ class ComidasPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           "Control de comidas",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: isTablet ? 24 : 18,
+          ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -25,57 +31,84 @@ class ComidasPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
+              // Título principal
+              Center(
                 child: Text(
                   "CONTROL DE COMIDAS",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: isTablet ? 24 : 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Botones de categorías
-              _buildCategoryButton("DESAYUNOS", Icons.free_breakfast, 1, context),
-              const SizedBox(height: 10),
-              _buildCategoryButton("COMIDAS", Icons.lunch_dining, 2, context),
-              const SizedBox(height: 10),
-              _buildCategoryButton("CENAS", Icons.dinner_dining, 3, context),
-              const SizedBox(height: 10),
-              _buildCategoryButton("SNACKS", Icons.fastfood, 4, context),
-              const SizedBox(height: 30),
+              _buildCategoryButton(
+                "DESAYUNOS",
+                Icons.free_breakfast,
+                Icons.free_breakfast,
+                isTablet,
+                context,
+              ),
+              SizedBox(height: isTablet ? 20 : 10),
+              _buildCategoryButton(
+                "COMIDAS",
+                Icons.lunch_dining,
+                Icons.lunch_dining,
+                isTablet,
+                context,
+              ),
+              SizedBox(height: isTablet ? 20 : 10),
+              _buildCategoryButton(
+                "CENAS",
+                Icons.dinner_dining,
+                Icons.dinner_dining,
+                isTablet,
+                context,
+              ),
+              SizedBox(height: isTablet ? 20 : 10),
+              _buildCategoryButton(
+                "SNACKS",
+                Icons.fastfood,
+                Icons.fastfood,
+                isTablet,
+                context,
+              ),
+              SizedBox(height: isTablet ? 40 : 30),
 
               // Lista de comidas del día
-              const Center(
+              Center(
                 child: Text(
                   "LISTA DE COMIDAS DEL DÍA",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: isTablet ? 24 : 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.teal,
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              const Center(
+              SizedBox(height: isTablet ? 20 : 10),
+              Center(
                 child: Text(
                   "20 de noviembre del 2024",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: isTablet ? 16 : 14,
                     color: Colors.grey,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
+
+              // Card de lista de comidas
               Container(
-                width: double.infinity, // Ocupa el 100% del ancho disponible
-                padding: const EdgeInsets.all(16.0),
+                width: double.infinity,
+                padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
                 decoration: BoxDecoration(
                   color: Colors.blue[50],
                   borderRadius: BorderRadius.circular(12),
@@ -90,8 +123,7 @@ class ComidasPage extends StatelessWidget {
                   ],
                 ),
               ),
-
-              const SizedBox(height: 20),
+              SizedBox(height: isTablet ? 30 : 20),
 
               // Botón de añadir
               Center(
@@ -101,14 +133,20 @@ class ComidasPage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF53746E),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(
+                      vertical: isTablet ? 20 : 16,
+                      horizontal: isTablet ? 40 : 20,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Añadir",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: isTablet ? 20 : 16,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -119,38 +157,42 @@ class ComidasPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryButton(String title, IconData icon, int categoryId, context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Menu(),
-          ),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey[200],
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+  Widget _buildCategoryButton(
+      String title, IconData leftIcon, IconData rightIcon, bool isTablet, context) {
+    return InkWell(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Menu(),
         ),
+      );
+    },
+      child: Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: isTablet ? 20 : 16,
+        horizontal: isTablet ? 30 : 20,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icon, color: Colors.teal),
-          const SizedBox(width: 10),
+          Icon(leftIcon, color: const Color.fromARGB(255, 1, 1, 1), size: isTablet ? 36 : 24),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.teal,
+            style: TextStyle(
+              fontSize: isTablet ? 20 : 16,
               fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 0, 0, 0),
             ),
           ),
+          Icon(rightIcon, color: const Color.fromARGB(255, 0, 0, 0), size: isTablet ? 36 : 24),
         ],
       ),
+    ),
     );
   }
 }
@@ -162,19 +204,23 @@ class _FoodItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isTablet = MediaQuery.of(context).size.width > 600;
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: EdgeInsets.symmetric(
+        vertical: isTablet ? 12 : 8,
+        horizontal: isTablet ? 24 : 16,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.teal),
+        border: Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          fontSize: 14,
+        style: TextStyle(
+          fontSize: isTablet ? 18 : 14,
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: Colors.black87,
         ),
         textAlign: TextAlign.center,
       ),
