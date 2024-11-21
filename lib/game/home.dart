@@ -55,17 +55,19 @@ class HomePage extends StatelessWidget {
       Assets.bufanda,
       Assets.zanahoria,
     ];
+    final double screenWidth = WidgetsBinding.instance.window.physicalSize.width /
+    WidgetsBinding.instance.window.devicePixelRatio;
 
     return images
         .asMap()
         .entries
         .map(
           (entry) => Positioned(
-            top: 250 + (entry.key * 10), // Incremento para separación opcional
-            right: -25,
+            top: 230, // Incremento para separación opcional
+            right: 0,
             child: Container(
-              width: 450,
-              height: 450,
+              width: screenWidth,
+              height: screenWidth,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(entry.value),
@@ -110,7 +112,7 @@ class LevelIndicator extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         height: 60,
-        width: 360,
+        width: MediaQuery.of(context).size.width - 30,
         child: Row(
           children: [
             CircleAvatar(
