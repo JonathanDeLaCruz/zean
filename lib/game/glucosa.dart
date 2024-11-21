@@ -8,6 +8,8 @@ class GlucosaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isTablet = size.width > 600; // Determina si es tablet o no.
     if (true) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ModalNoDatos.show(context); // Invoca el método estático de tu modal
