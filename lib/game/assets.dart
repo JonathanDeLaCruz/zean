@@ -17,4 +17,7 @@ class Assets {
   static const tres = 'assets/images/3.png';
   static const cuatro = 'assets/images/4.png';
   static const dieta = 'assets/images/dieta.jpeg';
+  static const fruta = 'assets/images/fruta.jpg';
+  static const huevo = 'assets/images/huevos.jpg';
+  static const panqueques = 'assets/images/panqueques.jpg';
 }

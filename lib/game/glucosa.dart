@@ -150,7 +150,7 @@ class GlucosaPage extends StatelessWidget {
                 ),
                 child: Center(
                   child: Image.asset(
-                    'assets/images/grafica.png',
+                    'assets/images/grafica-glucosa.png',
                     fit: BoxFit.cover,
                   ),
 /*                 child: Image.asset(

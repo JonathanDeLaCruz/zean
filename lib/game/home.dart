@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _startImageUpdateMensaje() {
-    _timer = Timer.periodic(const Duration(minutes: 2), (timer) {
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
       setState(() {
         showMessage = !showMessage; // Actualizar las imágenes de forma aleatoria
       });

@@ -125,6 +125,7 @@ class RecomendacionPage extends StatelessWidget {
 
             // Ruta de la imagen para la recomendación
             final imagenPath = recomendacion.imagen;
+            final iconoPath = recomendacion.imagen;
 
             return SingleChildScrollView(
         child: Padding(
@@ -143,7 +144,7 @@ class RecomendacionPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: isTablet ? 40 : 30,
-                      backgroundImage: AssetImage(iconPath), // Ruta a tu imagen
+                      backgroundImage: AssetImage(iconoPath), // Ruta a tu imagen
                     ),
                     const SizedBox(width: 16),
                           Expanded(

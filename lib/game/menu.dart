@@ -6,17 +6,17 @@ class Menu extends StatelessWidget {
     {
       'title': 'Fruta fresca',
       'subtitle': 'Fresas, sandía, melón y papaya',
-      'image': Assets.uno, // Cambia a tu ruta de imagen real
+      'image': Assets.fruta,
     },
     {
       'title': 'Huevos rancheros',
       'subtitle': 'Huevos, tomate, tortilla y queso',
-      'image': 'assets/dos.png', // Cambia a tu ruta de imagen real
+      'image': Assets.huevo,
     },
     {
       'title': 'Panqueques de avena',
       'subtitle': 'Harina, huevo, mantequilla y avena',
-      'image': 'assets/tres.png', // Cambia a tu ruta de imagen real
+      'image': Assets.panqueques,
     },
   ];
 

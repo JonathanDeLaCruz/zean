@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zean/game/crear.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,41 +12,44 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(isTablet ? 24.0 : 16.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: isTablet ? 32.0 : 16.0,
+            vertical: isTablet ? 40.0 : 20.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: isTablet ? 70 : 50),
+              // Espaciado superior
+              SizedBox(height: isTablet ? 60 : 30),
+
               // Logo
               Container(
-                width: isTablet ? 300 : 200,
+                width: double.infinity,
                 height: isTablet ? 150 : 100,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: const Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 alignment: Alignment.center,
-                child: Text(
-                  "LOGO ZENULIN",
-                  style: TextStyle(
-                    fontSize: isTablet ? 20 : 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                  ),
-                ),
+              child: Image.asset(
+                'assets/images/logo.png',
+                width: isTablet ? 300 : 80,
+                height: isTablet ? 300 : 80,
+                fit: BoxFit.contain,
               ),
-              SizedBox(height: isTablet ? 30 : 20),
+              ),
+              SizedBox(height: isTablet ? 40 : 20),
 
               // Título
               Text(
                 "INICIAR SESIÓN",
                 style: TextStyle(
-                  fontSize: isTablet ? 24 : 18,
+                  fontSize: isTablet ? 26 : 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.teal,
                 ),
               ),
-              SizedBox(height: isTablet ? 30 : 20),
+              SizedBox(height: isTablet ? 40 : 20),
 
               // Campos de entrada
               _buildInputField(
@@ -60,7 +62,7 @@ class LoginPage extends StatelessWidget {
                 obscureText: true,
                 isTablet: isTablet,
               ),
-              SizedBox(height: isTablet ? 30 : 20),
+              SizedBox(height: isTablet ? 40 : 20),
 
               // Botón Iniciar
               SizedBox(
@@ -68,9 +70,6 @@ class LoginPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Lógica para iniciar sesión
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Iniciando sesión...")),
-                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF53746E),
@@ -81,35 +80,37 @@ class LoginPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text(
-                    "Iniciar",
-                    style: TextStyle(
-                      fontSize: isTablet ? 20 : 16,
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Iniciar",
+                        style: TextStyle(
+                          fontSize: isTablet ? 20 : 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.arrow_forward, color: Colors.white),
+                    ],
                   ),
                 ),
               ),
               SizedBox(height: isTablet ? 20 : 10),
 
               // Texto para registro
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // Lógica para "No tengo cuenta"
-                    },
-                    child: Text(
-                      "No tengo cuenta",
-                      style: TextStyle(
-                        fontSize: isTablet ? 16 : 14,
-                        color: Colors.teal,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
+              GestureDetector(
+                onTap: () {
+                  // Lógica para "No tengo cuenta"
+                },
+                child: Text(
+                  "No tengo cuenta",
+                  style: TextStyle(
+                    fontSize: isTablet ? 16 : 14,
+                    color: Colors.teal,
+                    decoration: TextDecoration.underline,
                   ),
-                ],
+                ),
               ),
               SizedBox(height: isTablet ? 20 : 10),
 
@@ -118,13 +119,7 @@ class LoginPage extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navegar a CrearPage
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CrearPage(),
-                      ),
-                    );
+                    // Navegar a Crear cuenta
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
@@ -148,19 +143,20 @@ class LoginPage extends StatelessWidget {
 
               // Conejo y mensaje
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(isTablet ? 20.0 : 16.0),
+                      padding: EdgeInsets.all(isTablet ? 16.0 : 12.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Text(
+                      child: const Text(
                         "BIENVENIDO A NUESTRA APP",
                         style: TextStyle(
-                          fontSize: isTablet ? 16 : 12,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -168,9 +164,9 @@ class LoginPage extends StatelessWidget {
                   ),
                   SizedBox(width: isTablet ? 20 : 10),
                   Image.asset(
-                    'assets/images/conejo.png', // Ruta a la imagen del conejo
-                    width: isTablet ? 150 : 100,
-                    height: isTablet ? 150 : 100,
+                    'assets/images/conejo.png',
+                    width: isTablet ? 300 : 80,
+                    height: isTablet ? 300 : 80,
                     fit: BoxFit.contain,
                   ),
                 ],

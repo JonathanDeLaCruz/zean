@@ -43,11 +43,14 @@ class PerfilPage extends StatelessWidget {
                 CircleAvatar(
                   radius: isTablet ? 60 : 50,
                   backgroundColor: const Color(0xFFDEF3F1),
-                  child: Icon(
-                    Icons.person,
-                    size: isTablet ? 80 : 60,
-                    color: const Color(0xFF067D68),
-                  ),
+                    child: ClipOval(
+                      child: Image.asset(
+                      'assets/images/profile.jpeg',
+                      width: isTablet ? 120 : 80,
+                      height: isTablet ? 120 : 80,
+                      fit: BoxFit.cover,
+                      ),
+                    ),
                 ),
                 const SizedBox(width: 20),
                 Column(
@@ -225,7 +228,7 @@ class ProfileInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final isTablet = MediaQuery.of(context).size.width > 600;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: 30.0, top: 10.00), // Espaciado entre elementos
       child: RichText(
         text: TextSpan(
           text: "$label:\n",
@@ -248,6 +251,7 @@ class ProfileInfo extends StatelessWidget {
     );
   }
 }
+
 
 // Widget reutilizable para opciones dentro de una card
 class SettingsOption extends StatelessWidget {
